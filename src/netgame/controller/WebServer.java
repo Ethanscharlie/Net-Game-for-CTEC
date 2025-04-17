@@ -4,8 +4,10 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
+import java.nio.charset.StandardCharsets;
 
 public class WebServer
 {
@@ -44,16 +46,10 @@ public class WebServer
 				  const x = mouseX;
 				  const y = mouseY;
 
-				  fetch('/postgamedata', { 
-				    method: 'POST',
-				    headers: {
-				      'Content-Type': 'application/x-www-form-urlencoded',
-				    },
-				    body: `x=${x}&y=${y}`,
-				  })
-				  .catch(error => {
-				    console.error('Error sending cursor position:', error);
-				  });
+				  fetch(`/postgamedata?x=${x}&y=${y}`)
+				  	.catch(error => {
+				  	  console.error('Error sending cursor position:', error);
+				  	});
 				}
 
 				var intervalId = window.setInterval(function(){
@@ -62,7 +58,7 @@ public class WebServer
 
 				var intervalId2 = window.setInterval(function(){
 					sendPostRequest();
-				}, 400);
+				}, 1000);
 
             </script>
         </body>
@@ -161,14 +157,13 @@ public class WebServer
 		
         @Override
         public void handle(HttpExchange exchange) throws IOException {
-			InputStream requestBody = exchange.getRequestBody();
-        	String requestData = new java.util.Scanner(requestBody, StandardCharsets.UTF_8.name())
-                .useDelimiter("\\A")
-                .next();
-			
-			System.out.println(requestData);
+            String response = "Got Post";
+            exchange.sendResponseHeaders(200, response.getBytes().length);  
+            OutputStream os = exchange.getResponseBody();
+            os.write(response.getBytes());
+            os.close();
 
-        	requestBody.close();
+			System.out.println(exchange.getRequestURI().getQuery());
         }
     }
 }
