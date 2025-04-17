@@ -22,6 +22,14 @@ public class WebServer
             <div id="responseDiv"></div>
 
             <script>
+				let mouseX = 0;
+				let mouseY = 0;
+
+				document.addEventListener('mousemove', (event) => {
+				  mouseX = event.clientX;
+				  mouseY = event.clientY;
+				});
+
                 function sendGetRequest() {
                     fetch('/getgamedata')
                         .then(response => response.text())
@@ -32,9 +40,30 @@ public class WebServer
                         .catch(error => console.error('Error:', error));
                 }
 
+				function sendPostRequest() {
+				  const x = mouseX;
+				  const y = mouseY;
+
+				  fetch('/postgamedata', { 
+				    method: 'POST',
+				    headers: {
+				      'Content-Type': 'application/x-www-form-urlencoded',
+				    },
+				    body: `x=${x}&y=${y}`,
+				  })
+				  .catch(error => {
+				    console.error('Error sending cursor position:', error);
+				  });
+				}
+
 				var intervalId = window.setInterval(function(){
 					sendGetRequest();
 				}, 100);
+
+				var intervalId2 = window.setInterval(function(){
+					sendPostRequest();
+				}, 400);
+
             </script>
         </body>
     </html>
@@ -56,6 +85,7 @@ public class WebServer
 		
         server.createContext("/", new MainHandler(this));
         server.createContext("/getgamedata", new GameDataGetHandler(this));
+        server.createContext("/postgamedata", new GameDataPostHandler(this));
         server.setExecutor(null); // creates a default executor
         server.start();
         
@@ -94,7 +124,6 @@ public class WebServer
             exchange.sendResponseHeaders(200, response.getBytes().length);  
             OutputStream os = exchange.getResponseBody();
             os.write(response.getBytes());
-            System.out.println(exchange.getRequestBody().read());
             os.close();
         }
     }
@@ -110,12 +139,36 @@ public class WebServer
         @Override
         public void handle(HttpExchange exchange) throws IOException {
         	this.app.addToStatus(String.format("Handled Request"));
+
             String response = this.app.gamedata;
+			response += System.currentTimeMillis();
+			response += "\n";
+
             exchange.sendResponseHeaders(200, response.getBytes().length);  
             OutputStream os = exchange.getResponseBody();
             os.write(response.getBytes());
-            System.out.println(exchange.getRequestBody().read());
             os.close();
+        }
+    }
+
+	static class GameDataPostHandler implements HttpHandler {
+		WebServer app;
+		
+		public GameDataPostHandler(WebServer app)
+		{
+			this.app = app;
+		}
+		
+        @Override
+        public void handle(HttpExchange exchange) throws IOException {
+			InputStream requestBody = exchange.getRequestBody();
+        	String requestData = new java.util.Scanner(requestBody, StandardCharsets.UTF_8.name())
+                .useDelimiter("\\A")
+                .next();
+			
+			System.out.println(requestData);
+
+        	requestBody.close();
         }
     }
 }
