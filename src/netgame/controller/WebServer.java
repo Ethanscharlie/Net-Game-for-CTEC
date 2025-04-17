@@ -1,21 +1,23 @@
 package netgame.controller;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.InetSocketAddress;
+import java.util.HashMap;
+import java.util.Random;
+
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.InetSocketAddress;
-import java.nio.charset.StandardCharsets;
 
 public class WebServer
 {
 	public final int port = 3000;
 
 	public String gamedata;
-	
 	public HttpServer server;
+	public HashMap<String, int[]> positions; 
+	
 	
 	public final String html = """
     <html>
@@ -23,43 +25,60 @@ public class WebServer
 		    <h1>Hello, World!</h1>
             <div id="responseDiv"></div>
 
+			<canvas id="myCanvas" width="400" height="400" style="border:1px solid #000000;">
+			</canvas>
+
+
             <script>
+				let userID = USERIDHERE;
+
 				let mouseX = 0;
 				let mouseY = 0;
 
+				let canvas = document.getElementById("myCanvas");
+				let ctx = canvas.getContext("2d");
+
 				document.addEventListener('mousemove', (event) => {
-				  mouseX = event.clientX;
-				  mouseY = event.clientY;
+					const rect = canvas.getBoundingClientRect();
+  					const x = event.clientX - rect.left;
+  					const y = event.clientY - rect.top;
+
+					mouseX = x;
+					mouseY = y;
 				});
 
                 function sendGetRequest() {
                     fetch('/getgamedata')
                         .then(response => response.text())
                         .then(data => {
-                            console.log('Response:', data);
+                            console.log('Response from get req:', data);
 							document.getElementById('responseDiv').innerText = 'Last Response: ' + data;
                         })
                         .catch(error => console.error('Error:', error));
                 }
 
 				function sendPostRequest() {
-				  const x = mouseX;
-				  const y = mouseY;
-
-				  fetch(`/postgamedata?x=${x}&y=${y}`)
+					fetch(`/postgamedata?id=${userID}&x=${mouseX}&y=${mouseY}`)
 				  	.catch(error => {
 				  	  console.error('Error sending cursor position:', error);
 				  	});
+
+					console.log(`Positing: /postgamedata?id=${userID}&x=${mouseX}&y=${mouseY}`);
+				}
+
+				function draw() {
+					ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+					ctx.fillStyle = 'blue';
+					ctx.fillRect(mouseX, mouseY, 30, 30);
 				}
 
 				var intervalId = window.setInterval(function(){
 					sendGetRequest();
-				}, 100);
-
-				var intervalId2 = window.setInterval(function(){
 					sendPostRequest();
-				}, 1000);
 
+					draw();
+				}, 10);
             </script>
         </body>
     </html>
@@ -69,6 +88,8 @@ public class WebServer
 	
 	public WebServer()
 	{
+		this.positions = new HashMap<>(); 
+
 		try
 		{
 			server = HttpServer.create(new InetSocketAddress(this.port), 0);
@@ -100,6 +121,20 @@ public class WebServer
 	{
 		this.serverStatus += text + "\n";
 	}
+
+	public String getPositionsAsString()
+	{
+		String str = "";
+
+		for (HashMap.Entry<String, int[]> entry : positions.entrySet()) {
+		    String userID = entry.getKey();
+		    int[] pos = entry.getValue();
+
+			str += String.format("id=%s&x=%d&y=%d\n", userID, pos[0], pos[1]);
+		}
+
+		return str;
+	}
 	
 	static class MainHandler implements HttpHandler {
 		WebServer app;
@@ -111,12 +146,16 @@ public class WebServer
 		
         @Override
         public void handle(HttpExchange exchange) throws IOException {
-			this.app.gamedata += "Somebody joined the game :3";
+			this.app.gamedata += "Somebody joined the game :3    ";
 			this.app.gamedata += Math.random() % 5;
 			this.app.gamedata += "\n";
 
         	this.app.addToStatus(String.format("Handled Request"));
+
+			Integer randomUserID = new Random().nextInt();
             String response = this.app.html;
+			response = response.replace("USERIDHERE", randomUserID.toString());
+
             exchange.sendResponseHeaders(200, response.getBytes().length);  
             OutputStream os = exchange.getResponseBody();
             os.write(response.getBytes());
@@ -136,9 +175,7 @@ public class WebServer
         public void handle(HttpExchange exchange) throws IOException {
         	this.app.addToStatus(String.format("Handled Request"));
 
-            String response = this.app.gamedata;
-			response += System.currentTimeMillis();
-			response += "\n";
+			String response = this.app.getPositionsAsString();
 
             exchange.sendResponseHeaders(200, response.getBytes().length);  
             OutputStream os = exchange.getResponseBody();
@@ -163,7 +200,15 @@ public class WebServer
             os.write(response.getBytes());
             os.close();
 
-			System.out.println(exchange.getRequestURI().getQuery());
+			String query = exchange.getRequestURI().getQuery();
+			String[] querys = query.split("&");
+			String userID = querys[0].replace("id=", "");
+			int x = Integer.parseInt(querys[1].replace("x=", ""));
+			int y = Integer.parseInt(querys[2].replace("y=", ""));
+
+			System.out.println(query);
+
+			this.app.positions.put(userID, new int[]{x, y});
         }
     }
 }
