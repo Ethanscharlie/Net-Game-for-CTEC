@@ -2,9 +2,9 @@
     <body>
 		<h1>Pictionary</h1>
         <div id="MyID"></div>
+        <div id="responseDiv"></div>
 
 		<canvas id="myCanvas" width="400" height="400" style="border:1px solid #000000;"></canvas>
-        <div id="responseDiv"></div>
 
         <script>
 			let userID = 0;
@@ -20,13 +20,18 @@
                     .then(data => {
 						let splitData = data.split("\n");
 
-						userID = splitData[0].replace("yourID=");
+						userID = splitData[0].replace("yourID=", "");
 						document.getElementById("MyID").innerText = `My ID: ${userID}`;
 
 						let drawingPlayerID = splitData[1].replace("drawingPlayerID=", "");
 						let newCanvasData = splitData[2].replace("canvas=", "");
 
-						document.getElementById('responseDiv').innerText = `Drawing Player ID = ${drawingPlayerID}\nCanvas Data = ${newCanvasData}`;
+						document.getElementById('responseDiv').innerText = "";
+						if (drawingPlayerID == userID) {
+							document.getElementById('responseDiv').innerText = "YOU are drawing";
+						} else {
+							document.getElementById('responseDiv').innerText = "YOU are guessing";
+						}
 
 						if (userID != drawingPlayerID) {
 							let image = new Image();
