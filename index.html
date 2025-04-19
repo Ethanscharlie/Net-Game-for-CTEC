@@ -12,6 +12,8 @@
 			let mouseX = 69;
 			let mouseY = 69;
 
+			let otherPlayers = {};
+
 			let canvas = document.getElementById("myCanvas");
 			let ctx = canvas.getContext("2d");
 
@@ -25,37 +27,47 @@
 			});
 
             function sendGetRequest() {
-                fetch('/getgamedata')
+                fetch(`/getgamedata?id=${userID}&x=${mouseX}&y=${mouseY}`)
                     .then(response => response.text())
                     .then(data => {
                         console.log('Response from get req:', data);
 						document.getElementById('responseDiv').innerText = 'Last Response: ' + data;
+
+						let playerDatas = data.split("\n");
+						playerDatas.forEach(playerData => {
+							if (playerData != "") {
+								let items = playerData.split("&");
+								let id = items[0].replace("id=", "");
+								let x = items[1].replace("x=", "");
+								let y = items[2].replace("y=", "");
+								otherPlayers[id] = {"x": x, "y": y};
+							}
+						});
+						console.log(otherPlayers);
                     })
                     .catch(error => console.error('Error:', error));
             }
 
-			function sendPostRequest() {
-				fetch(`/postgamedata?id=${userID}&x=${mouseX}&y=${mouseY}`)
-			  	.catch(error => {
-			  	  console.error('Error sending cursor position:', error);
-			  	});
-
-				console.log(`Positing: /postgamedata?id=${userID}&x=${mouseX}&y=${mouseY}`);
-			}
-
 			function draw() {
 				ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+				ctx.fillStyle = 'orange';
+				for (const [id, pos] of Object.entries(otherPlayers)) {
+					ctx.fillRect(pos["x"], pos["y"], 30, 30);
+				}
+
 				ctx.fillStyle = 'blue';
 				ctx.fillRect(mouseX, mouseY, 30, 30);
+
 			}
 
-			var intervalId = window.setInterval(function(){
+			window.setInterval(function(){
 				sendGetRequest();
-				sendPostRequest();
+			}, 100);
 
+			window.setInterval(function(){
 				draw();
-			}, 500);
+			}, 1);
         </script>
     </body>
 </html>

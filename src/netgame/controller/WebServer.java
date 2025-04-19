@@ -62,7 +62,6 @@ public class WebServer
 		
         server.createContext("/", new MainHandler(this));
         server.createContext("/getgamedata", new GameDataGetHandler(this));
-        server.createContext("/postgamedata", new GameDataPostHandler(this));
         server.setExecutor(null); // creates a default executor
         server.start();
         
@@ -106,12 +105,6 @@ public class WebServer
 		
         @Override
         public void handle(HttpExchange exchange) throws IOException {
-			this.app.gamedata += "Somebody joined the game :3    ";
-			this.app.gamedata += Math.random() % 5;
-			this.app.gamedata += "\n";
-
-        	this.app.addToStatus(String.format("Handled Request"));
-
 			Integer randomUserID = new Random().nextInt();
             String response = this.app.html;
 			response = response.replace("USERIDHERE", randomUserID.toString());
@@ -135,40 +128,30 @@ public class WebServer
         public void handle(HttpExchange exchange) throws IOException {
         	this.app.addToStatus(String.format("Handled Request"));
 
+			String query = exchange.getRequestURI().getQuery();
+			String[] querys = query.split("&");
+			String userID = querys[0].replace("id=", "");
+			double x = Double.parseDouble(querys[1].replace("x=", ""));
+			double y = Double.parseDouble(querys[2].replace("y=", ""));
+
+			System.out.println(exchange.getRequestURI());
+
+			this.app.positions.put(userID, new int[]{(int)x, (int)y});
+
+
+
+
+
 			String response = this.app.getPositionsAsString();
 
             exchange.sendResponseHeaders(200, response.getBytes().length);  
             OutputStream os = exchange.getResponseBody();
             os.write(response.getBytes());
             os.close();
-        }
-    }
 
-	static class GameDataPostHandler implements HttpHandler {
-		WebServer app;
-		
-		public GameDataPostHandler(WebServer app)
-		{
-			this.app = app;
-		}
-		
-        @Override
-        public void handle(HttpExchange exchange) throws IOException {
-            String response = "Got Post";
-            exchange.sendResponseHeaders(200, response.getBytes().length);  
-            OutputStream os = exchange.getResponseBody();
-            os.write(response.getBytes());
-            os.close();
+			System.out.println("Handled get req");
 
-			String query = exchange.getRequestURI().getQuery();
-			String[] querys = query.split("&");
-			String userID = querys[0].replace("id=", "");
-			int x = Integer.parseInt(querys[1].replace("x=", ""));
-			int y = Integer.parseInt(querys[2].replace("y=", ""));
 
-			System.out.println(exchange.getRequestURI());
-
-			this.app.positions.put(userID, new int[]{x, y});
         }
     }
 }
