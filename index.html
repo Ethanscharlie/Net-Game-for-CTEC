@@ -1,0 +1,61 @@
+<html>
+    <body>
+		  <h1>Hello, World!</h1>
+        <div id="responseDiv"></div>
+
+		<canvas id="myCanvas" width="400" height="400" style="border:1px solid #000000;"></canvas>
+
+
+        <script>
+			let userID = USERIDHERE;
+
+			let mouseX = 0;
+			let mouseY = 0;
+
+			let canvas = document.getElementById("myCanvas");
+			let ctx = canvas.getContext("2d");
+
+			document.addEventListener('mousemove', (event) => {
+				const rect = canvas.getBoundingClientRect();
+  				const x = event.clientX - rect.left;
+  				const y = event.clientY - rect.top;
+
+				mouseX = x;
+				mouseY = y;
+			});
+
+            function sendGetRequest() {
+                fetch('/getgamedata')
+                    .then(response => response.text())
+                    .then(data => {
+                        console.log('Response from get req:', data);
+						document.getElementById('responseDiv').innerText = 'Last Response: ' + data;
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+
+			function sendPostRequest() {
+				fetch(`/postgamedata?id=${userID}&x=${mouseX}&y=${mouseY}`)
+			  	.catch(error => {
+			  	  console.error('Error sending cursor position:', error);
+			  	});
+
+				console.log(`Positing: /postgamedata?id=${userID}&x=${mouseX}&y=${mouseY}`);
+			}
+
+			function draw() {
+				ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+				ctx.fillStyle = 'blue';
+				ctx.fillRect(mouseX, mouseY, 30, 30);
+			}
+
+			var intervalId = window.setInterval(function(){
+				sendGetRequest();
+				sendPostRequest();
+
+				draw();
+			}, 10);
+        </script>
+    </body>
+</html>

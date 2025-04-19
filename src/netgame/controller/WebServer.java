@@ -1,10 +1,13 @@
 package netgame.controller;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.util.HashMap;
 import java.util.Random;
+import java.util.Scanner;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -19,77 +22,34 @@ public class WebServer
 	public HashMap<String, int[]> positions; 
 	
 	
-	public final String html = """
-    <html>
-        <body>
-		    <h1>Hello, World!</h1>
-            <div id="responseDiv"></div>
-
-			<canvas id="myCanvas" width="400" height="400" style="border:1px solid #000000;">
-			</canvas>
-
-
-            <script>
-				let userID = USERIDHERE;
-
-				let mouseX = 0;
-				let mouseY = 0;
-
-				let canvas = document.getElementById("myCanvas");
-				let ctx = canvas.getContext("2d");
-
-				document.addEventListener('mousemove', (event) => {
-					const rect = canvas.getBoundingClientRect();
-  					const x = event.clientX - rect.left;
-  					const y = event.clientY - rect.top;
-
-					mouseX = x;
-					mouseY = y;
-				});
-
-                function sendGetRequest() {
-                    fetch('/getgamedata')
-                        .then(response => response.text())
-                        .then(data => {
-                            console.log('Response from get req:', data);
-							document.getElementById('responseDiv').innerText = 'Last Response: ' + data;
-                        })
-                        .catch(error => console.error('Error:', error));
-                }
-
-				function sendPostRequest() {
-					fetch(`/postgamedata?id=${userID}&x=${mouseX}&y=${mouseY}`)
-				  	.catch(error => {
-				  	  console.error('Error sending cursor position:', error);
-				  	});
-
-					console.log(`Positing: /postgamedata?id=${userID}&x=${mouseX}&y=${mouseY}`);
-				}
-
-				function draw() {
-					ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-					ctx.fillStyle = 'blue';
-					ctx.fillRect(mouseX, mouseY, 30, 30);
-				}
-
-				var intervalId = window.setInterval(function(){
-					sendGetRequest();
-					sendPostRequest();
-
-					draw();
-				}, 10);
-            </script>
-        </body>
-    </html>
-    """;
+	public String html;
 	
 	private String serverStatus = "";
 	
 	public WebServer()
 	{
+		// Read HTML
+		this.html = "";
+		Scanner scanner;
+		try 
+		{
+			scanner = new Scanner(new File("index.html"));
+
+			while (scanner.hasNextLine()) {
+			    String line = scanner.nextLine();
+				this.html += line;
+			}
+
+			scanner.close();
+		} 
+		catch (FileNotFoundException e) 
+		{
+			e.printStackTrace();
+		}
+
 		this.positions = new HashMap<>(); 
 
+		// Open Webserver
 		try
 		{
 			server = HttpServer.create(new InetSocketAddress(this.port), 0);
