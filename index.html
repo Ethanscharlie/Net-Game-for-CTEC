@@ -1,73 +1,72 @@
 <html>
     <body>
-		  <h1>Hello, World!</h1>
-        <div id="responseDiv"></div>
+		<h1>Pictionary</h1>
+        <div id="MyID"></div>
 
 		<canvas id="myCanvas" width="400" height="400" style="border:1px solid #000000;"></canvas>
-
+        <div id="responseDiv"></div>
 
         <script>
-			let userID = USERIDHERE;
-
-			let mouseX = 69;
-			let mouseY = 69;
-
-			let otherPlayers = {};
+			let userID = 0;
 
 			let canvas = document.getElementById("myCanvas");
 			let ctx = canvas.getContext("2d");
 
-			document.addEventListener('mousemove', (event) => {
-				const rect = canvas.getBoundingClientRect();
-  				const x = event.clientX - rect.left;
-  				const y = event.clientY - rect.top;
-
-				mouseX = x;
-				mouseY = y;
-			});
+			let drawing = false;
 
             function sendGetRequest() {
-                fetch(`/getgamedata?id=${userID}&x=${mouseX}&y=${mouseY}`)
+                fetch(`/getgamedata?canvas=${canvas.toDataURL()}`)
                     .then(response => response.text())
                     .then(data => {
-                        console.log('Response from get req:', data);
-						document.getElementById('responseDiv').innerText = 'Last Response: ' + data;
+						let splitData = data.split("\n");
 
-						let playerDatas = data.split("\n");
-						playerDatas.forEach(playerData => {
-							if (playerData != "") {
-								let items = playerData.split("&");
-								let id = items[0].replace("id=", "");
-								let x = items[1].replace("x=", "");
-								let y = items[2].replace("y=", "");
-								otherPlayers[id] = {"x": x, "y": y};
-							}
-						});
-						console.log(otherPlayers);
+						userID = splitData[0].replace("yourID=");
+						document.getElementById("MyID").innerText = `My ID: ${userID}`;
+
+						let drawingPlayerID = splitData[1].replace("drawingPlayerID=", "");
+						let newCanvasData = splitData[2].replace("canvas=", "");
+
+						document.getElementById('responseDiv').innerText = `Drawing Player ID = ${drawingPlayerID}\nCanvas Data = ${newCanvasData}`;
+
+						if (userID != drawingPlayerID) {
+							let image = new Image();
+							image.onload = function() {
+								ctx.clearRect(0, 0, canvas.width, canvas.height);
+								ctx.drawImage(image, 0, 0);
+							};
+							image.src = newCanvasData;
+						}
                     })
                     .catch(error => console.error('Error:', error));
             }
-
-			function draw() {
-				ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-				ctx.fillStyle = 'orange';
-				for (const [id, pos] of Object.entries(otherPlayers)) {
-					ctx.fillRect(pos["x"], pos["y"], 30, 30);
-				}
-
-				ctx.fillStyle = 'blue';
-				ctx.fillRect(mouseX, mouseY, 30, 30);
-
-			}
+			
+			canvas.addEventListener('mousedown', (e) => {
+			  drawing = true;
+			  ctx.beginPath();
+			  ctx.moveTo(e.offsetX, e.offsetY);
+			});
+		 
+			canvas.addEventListener('mousemove', (e) => {
+			  if (drawing) {
+			    ctx.lineTo(e.offsetX, e.offsetY);
+			    ctx.stroke();
+			  }
+			});
+		 
+			canvas.addEventListener('mouseup', () => {
+			  drawing = false;
+			  ctx.closePath();
+			});
+		 
+			canvas.addEventListener('mouseleave', () => {
+			  drawing = false;
+			  ctx.closePath();
+			});
 
 			window.setInterval(function(){
+				document.getElementById('MyID').innerText = `My ID: ${userID}`;
 				sendGetRequest();
 			}, 100);
-
-			window.setInterval(function(){
-				draw();
-			}, 1);
         </script>
     </body>
 </html>

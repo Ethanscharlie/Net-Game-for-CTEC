@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Scanner;
@@ -17,17 +18,17 @@ public class WebServer
 {
 	public final int port = 3000;
 
-	public String gamedata;
 	public HttpServer server;
-	public HashMap<String, int[]> positions; 
-	
-	
 	public String html;
-	
-	private String serverStatus = "";
+
+	public ArrayList<String> players;
+	public int drawingPlayerID = 0;
+	public String canvasData;
 	
 	public WebServer()
 	{
+		players = new ArrayList<>();
+
 		// Read HTML
 		this.html = "";
 		Scanner scanner;
@@ -47,8 +48,6 @@ public class WebServer
 			e.printStackTrace();
 		}
 
-		this.positions = new HashMap<>(); 
-
 		// Open Webserver
 		try
 		{
@@ -65,34 +64,13 @@ public class WebServer
         server.setExecutor(null); // creates a default executor
         server.start();
         
-        this.serverStatus += "Server started\n";
-        
         System.out.printf("Server started on port %d\n", this.port);
         
 	}
-	
-	public String getStatus() 
-	{
-		return this.serverStatus;
-	}
-	
-	public void addToStatus(String text)
-	{
-		this.serverStatus += text + "\n";
-	}
 
-	public String getPositionsAsString()
-	{
-		String str = "";
-
-		for (HashMap.Entry<String, int[]> entry : positions.entrySet()) {
-		    String userID = entry.getKey();
-		    int[] pos = entry.getValue();
-
-			str += String.format("id=%s&x=%d&y=%d\n", userID, pos[0], pos[1]);
-		}
-
-		return str;
+	public int getPlayerID(String ip) {
+		int id = this.players.indexOf(ip);
+		return id;
 	}
 	
 	static class MainHandler implements HttpHandler {
@@ -105,9 +83,11 @@ public class WebServer
 		
         @Override
         public void handle(HttpExchange exchange) throws IOException {
-			Integer randomUserID = new Random().nextInt();
+			final String clientIp = exchange.getRemoteAddress().getAddress().getHostAddress();
+			this.app.players.add(clientIp);
+
+			// Integer randomUserID = new Random().nextInt();
             String response = this.app.html;
-			response = response.replace("USERIDHERE", randomUserID.toString());
 
             exchange.sendResponseHeaders(200, response.getBytes().length);  
             OutputStream os = exchange.getResponseBody();
@@ -126,32 +106,25 @@ public class WebServer
 		
         @Override
         public void handle(HttpExchange exchange) throws IOException {
-        	this.app.addToStatus(String.format("Handled Request"));
+			final String clientIp = exchange.getRemoteAddress().getAddress().getHostAddress();
 
+			// Request
 			String query = exchange.getRequestURI().getQuery();
-			String[] querys = query.split("&");
-			String userID = querys[0].replace("id=", "");
-			double x = Double.parseDouble(querys[1].replace("x=", ""));
-			double y = Double.parseDouble(querys[2].replace("y=", ""));
 
-			System.out.println(exchange.getRequestURI());
+			if (this.app.getPlayerID(clientIp) == this.app.drawingPlayerID) {
+				this.app.canvasData = query.replace("canvas=", "");
+			}
 
-			this.app.positions.put(userID, new int[]{(int)x, (int)y});
-
-
-
-
-
-			String response = this.app.getPositionsAsString();
+			// Response
+			String response = "";
+			response += String.format("yourID=%d\n", this.app.getPlayerID(clientIp));
+			response += String.format("drawingPlayerID=%s\n", this.app.drawingPlayerID);
+			response += String.format("canvas=%s", this.app.canvasData);
 
             exchange.sendResponseHeaders(200, response.getBytes().length);  
             OutputStream os = exchange.getResponseBody();
             os.write(response.getBytes());
             os.close();
-
-			System.out.println("Handled get req");
-
-
         }
     }
 }
