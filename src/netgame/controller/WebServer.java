@@ -166,7 +166,7 @@ public class WebServer
 			int x = Integer.parseInt(querys[1].replace("x=", ""));
 			int y = Integer.parseInt(querys[2].replace("y=", ""));
 
-			System.out.println(query);
+			System.out.println(exchange.getRequestURI());
 
 			this.app.positions.put(userID, new int[]{x, y});
         }
