@@ -26,11 +26,9 @@ class GameDataGetHandler implements HttpHandler {
 
         // Request
         final String query = exchange.getRequestURI().getQuery();
-
+        String canvasData = query.replace("canvas=", "");
         String word = "noneyo";
         if (this.controller.getPlayerID(clientIp) == drawingPlayerID) {
-            String canvasData = query.replace("canvas=", "");
-            this.controller.setCanvasData(canvasData);
             word = this.controller.getWord();
         }
 
@@ -45,5 +43,10 @@ class GameDataGetHandler implements HttpHandler {
         OutputStream os = exchange.getResponseBody();
         os.write(response.getBytes());
         os.close();
+
+        if (this.controller.getPlayerID(clientIp) == drawingPlayerID) {
+            this.controller.setCanvasData(canvasData);
+        }
+
     }
 }

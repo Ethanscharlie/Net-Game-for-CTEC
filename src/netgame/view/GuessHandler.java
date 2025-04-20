@@ -35,6 +35,7 @@ public class GuessHandler implements HttpHandler
                 System.out.println("User got it correct!");
                 this.controller.changePlayers();
                 this.controller.newWord();
+                this.controller.setCanvasData("clear");
             }
         }
 
