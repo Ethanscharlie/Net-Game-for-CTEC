@@ -14,6 +14,7 @@ public class Controller
 	{
 		this.server = new WebServer(this);
 		this.game = new Game();
+		this.newWord();
 
 		// Handle closing
 		Scanner scanner = new Scanner(System.in);
@@ -74,5 +75,30 @@ public class Controller
 	public int getDrawingPlayerID()
 	{
 		return this.game.drawingPlayerID;
+	}
+
+	public String newWord() 
+	{
+		int index = (int)(Math.random() * this.game.words.size()); 
+		this.game.word = this.game.words.get(index);
+		return this.game.word;
+	}
+
+	public String getWord()
+	{
+		return this.game.word;
+	}
+
+	public void changePlayers()
+	{
+		final int currentPlayerID = this.game.drawingPlayerID;
+
+		int index = currentPlayerID; 
+		while (index == currentPlayerID) 
+		{
+			index = (int)(Math.random() * this.game.players.size()); 
+		}
+
+		this.game.drawingPlayerID = index;
 	}
 }

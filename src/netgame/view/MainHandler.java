@@ -22,10 +22,8 @@ class MainHandler implements HttpHandler {
     public void handle(HttpExchange exchange) throws IOException {
 	    final String clientIp = exchange.getRemoteAddress().getAddress().getHostAddress();
 		this.controller.registerPlayer(clientIp);
-        System.out.println("Boobies");
 
         String response = this.webServer.getHTML();
-        System.out.println(response);
 
         exchange.sendResponseHeaders(200, response.getBytes().length);  
         OutputStream os = exchange.getResponseBody();

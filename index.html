@@ -6,6 +6,11 @@
 
 		<canvas id="myCanvas" width="400" height="400" style="border:1px solid #000000;"></canvas>
 
+		<form id="guessForm">
+			<input type="text" id="guess" name="guess">
+			<input type="submit" value="Submit">
+		</form> 
+
         <script>
 			let userID = 0;
 
@@ -13,6 +18,16 @@
 			let ctx = canvas.getContext("2d");
 
 			let drawing = false;
+
+			document.getElementById("guessForm").addEventListener("submit", (e) => {
+				e.preventDefault();
+
+				let guess = document.getElementById("guess").value;
+                fetch(`/guess?guess=${guess}`)
+                    .then(response => response.text())
+                    .then(data => {})
+                    .catch(error => console.error('Error:', error));
+			});
 
             function sendGetRequest() {
                 fetch(`/getgamedata?canvas=${canvas.toDataURL()}`)
@@ -25,10 +40,12 @@
 
 						let drawingPlayerID = splitData[1].replace("drawingPlayerID=", "");
 						let newCanvasData = splitData[2].replace("canvas=", "");
+						let word = splitData[3].replace("word=", "");
 
 						document.getElementById('responseDiv').innerText = "";
 						if (drawingPlayerID == userID) {
 							document.getElementById('responseDiv').innerText = "YOU are drawing";
+							document.getElementById('responseDiv').innerText += `     ${word}`;
 						} else {
 							document.getElementById('responseDiv').innerText = "YOU are guessing";
 						}

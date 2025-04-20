@@ -25,18 +25,21 @@ class GameDataGetHandler implements HttpHandler {
         final int drawingPlayerID = this.controller.getDrawingPlayerID();
 
         // Request
-        String query = exchange.getRequestURI().getQuery();
+        final String query = exchange.getRequestURI().getQuery();
 
+        String word = "noneyo";
         if (this.controller.getPlayerID(clientIp) == drawingPlayerID) {
             String canvasData = query.replace("canvas=", "");
             this.controller.setCanvasData(canvasData);
+            word = this.controller.getWord();
         }
 
         // Response
         String response = "";
         response += String.format("yourID=%d\n", this.controller.getPlayerID(clientIp));
         response += String.format("drawingPlayerID=%s\n", drawingPlayerID);
-        response += String.format("canvas=%s", this.controller.getCanvasData());
+        response += String.format("canvas=%s\n", this.controller.getCanvasData());
+        response += String.format("word=%s", word);
 
         exchange.sendResponseHeaders(200, response.getBytes().length);  
         OutputStream os = exchange.getResponseBody();
