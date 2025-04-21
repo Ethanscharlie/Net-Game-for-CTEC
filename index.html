@@ -1,27 +1,69 @@
 <html>
+	<head>
+		<style>
+			.align-left {
+				display: inline-block;
+			}
+
+			.align-middle {
+				display: inline-block;
+			}
+
+			.align-right {
+				display: inline-block;
+			}
+
+			#gamePanel {
+				background-color: gray;
+				width: 80%;
+				margin: auto;
+			}
+		</style>
+	</head>
+
     <body>
 		<h1>Pictionary</h1>
         <div id="MyID"></div>
         <div id="responseDiv"></div>
 
-		<canvas id="myCanvas" width="400" height="400" style="border:1px solid #000000;"></canvas>
+		<div id="gamePanel">
+			<div id="drawInputPanel" class="align-left">
+				<div class="slidecontainer">
+					<input type="range" min="1" max="20" value="1" class="slider" id="strokeWidthRange">
+				</div>
 
-		<div class="slidecontainer">
-			<input type="range" min="1" max="20" value="1" class="slider" id="strokeWidthRange">
+				<button onclick="setPenColor(`blue`)">Set Color Blue</button><br>
+				<button onclick="setPenColor(`green`)"">Set Color Green</button><br>
+				<button onclick="setPenColor(`red`)">Set Color Red</button><br>
+				<button onclick="setPenColor(`yellow`)">Set Color Yellow</button><br>
+				<button onclick="setPenColor(`orange`)">Set Color Orange</button><br>
+				<button onclick="setPenColor(`white`)">Set Color White</button><br>
+				<button onclick="setPenColor(`black`)">Set Color Black</button><br>
+				<button onclick="clearCanvas()">Clear Canvas</button><br>
+			</div>
+
+			<canvas id="myCanvas" width="800" height="600" style="border:1px solid #000000;" class="align-middle"></canvas>
+
+			<div class="align-right">
+				<div>
+					<p>Message</p>
+					<p>Message</p>
+					<p>Message</p>
+					<p>Message</p>
+					<p>Message</p>
+					<p>Message</p>
+					<p>Message</p>
+					<p>Message</p>
+					<p>Message</p>
+					<p>Message</p>
+				</div>
+				
+				<form id="guessForm">
+					<input type="text" id="guess" name="guess">
+					<input type="submit" value="Submit">
+				</form> 
+			</div>
 		</div>
-		<button onclick="setPenColor(`blue`)">Set Color Blue</button>
-		<button onclick="setPenColor(`green`)"">Set Color Green</button>
-		<button onclick="setPenColor(`red`)">Set Color Red</button>
-		<button onclick="setPenColor(`yellow`)">Set Color Yellow</button>
-		<button onclick="setPenColor(`orange`)">Set Color Orange</button>
-		<button onclick="setPenColor(`white`)">Set Color White</button>
-		<button onclick="setPenColor(`black`)">Set Color Black</button>
-		<button onclick="clearCanvas()">Clear Canvas</button>
-
-		<form id="guessForm">
-			<input type="text" id="guess" name="guess">
-			<input type="submit" value="Submit">
-		</form> 
 
         <script>
 			let userID = 0;
