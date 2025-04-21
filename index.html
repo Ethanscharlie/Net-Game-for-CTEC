@@ -6,6 +6,10 @@
 
 		<canvas id="myCanvas" width="400" height="400" style="border:1px solid #000000;"></canvas>
 
+		<button onclick="setPenColor(`blue`)">Set Color Blue</button>
+		<button onclick="setPenColor(`green`)"">Set Color Green</button>
+		<button onclick="setPenColor(`red`)">Set Color Red</button>
+		<button onclick="setPenColor(`black`)">Set Color Black</button>
 		<button onclick="clearCanvas()">Clear Canvas</button>
 
 		<form id="guessForm">
@@ -70,6 +74,10 @@
                     })
                     .catch(error => console.error('Error:', error));
             }
+
+			function setPenColor(colorName){
+				ctx.strokeStyle = colorName;
+			}
 
 			function clearCanvas()
 			{
