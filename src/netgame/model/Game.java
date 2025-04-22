@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class Game 
 {
-	public ArrayList<String> players;
+	public ArrayList<Player> players;
 	public int drawingPlayerID = 0;
 	public String canvasData;
     public ArrayList<String> words;

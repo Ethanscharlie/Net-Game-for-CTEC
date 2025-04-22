@@ -130,6 +130,7 @@
 			let strokeWidthRange = document.getElementById("strokeWidthRange");
 			let guessesElement = document.getElementById("guessesText");
 			let guessesContainerElement = document.getElementById("guesses");
+			let nameInputElement = document.getElementById("nameInput");
 
 			let drawing = false;
 
@@ -151,7 +152,7 @@
 			});
 
             function sendGetRequest() {
-                fetch(`/getgamedata?canvas=${canvas.toDataURL()}`)
+                fetch(`/getgamedata?name=${nameInputElement.value}&canvas=${canvas.toDataURL()}`)
                     .then(response => response.text())
                     .then(data => {
 						let splitData = data.split("\n");

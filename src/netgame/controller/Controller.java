@@ -2,6 +2,7 @@ package netgame.controller;
 
 import java.util.Scanner;
 import netgame.model.Game;
+import netgame.model.Player;
 import netgame.view.WebServer;
 
 public class Controller
@@ -38,7 +39,7 @@ public class Controller
             return -1;
         }
 
-        this.game.players.add(ip);
+        this.game.players.add(new Player(ip, ""));
         return this.game.players.size() - 1;
     }
 
@@ -48,8 +49,27 @@ public class Controller
 	 */
 	public int getPlayerID(String ip) 
     {
-		int id = this.game.players.indexOf(ip);
-		return id;
+		for (int index = 0; index < game.players.size(); index ++)
+		{
+			if (!game.players.get(index).ip.equals(ip))
+			{
+				continue;
+			}
+
+			return index;
+		}
+
+		return -1;
+	}
+
+	public void setPlayerName(int id, String name) 
+	{
+		this.game.players.get(id).name = name;
+	}
+	
+	public String getPlayerName(int id) 
+	{
+		return this.game.players.get(id).name;
 	}
 	
     /**
@@ -108,7 +128,7 @@ public class Controller
 
 	public void addGuess(String guess, int userID)
 	{
-		this.game.guesses += guess + "#" + userID + ",";
+		this.game.guesses += guess + "  #  " + getPlayerName(userID) + ",";
 	}
 
 	public String getGuesses()
