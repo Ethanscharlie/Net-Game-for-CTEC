@@ -33,7 +33,7 @@ public class Controller
      */
     public int registerPlayer(String ip)
     {
-        if (this.game.players.contains(ip)) 
+        if (getPlayerID(ip) != -1) 
         {
             System.out.println("Couldn't register player, player already has been registered");
             return -1;
@@ -78,7 +78,7 @@ public class Controller
 
 		for (Player player : this.game.players) 
 		{
-			playerList += player.name + ",";
+			playerList += player.name + "#" + this.game.players.indexOf(player) + ",";
 		}
 
 		return playerList;
