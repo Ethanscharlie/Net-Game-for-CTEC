@@ -12,6 +12,7 @@ public class Game
 	public String canvasData;
     public ArrayList<String> words;
     public String word;
+    public String guesses;
 
     public Game() 
     {

@@ -1,11 +1,9 @@
 package netgame.view;
 
-import java.io.IOException;
-import java.io.OutputStream;
-
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-
+import java.io.IOException;
+import java.io.OutputStream;
 import netgame.controller.Controller;
 
 public class GuessHandler implements HttpHandler
@@ -29,13 +27,17 @@ public class GuessHandler implements HttpHandler
         if (this.controller.getPlayerID(clientIp) != drawingPlayerID) 
         {
             final String guess = query.replace("guess=", "");
+            this.controller.addGuess(guess, this.controller.getPlayerID(clientIp));
+
             final String correctGuess = this.controller.getWord();
+
             if (guess.equalsIgnoreCase(correctGuess)) 
             {
                 System.out.println("User got it correct!");
                 this.controller.changePlayers();
                 this.controller.newWord();
                 this.controller.setCanvasData("clear");
+                this.controller.resetGuesses();
             }
         }
 

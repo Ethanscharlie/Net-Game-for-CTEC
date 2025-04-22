@@ -1,11 +1,9 @@
 package netgame.view;
 
-import java.io.IOException;
-import java.io.OutputStream;
-
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-
+import java.io.IOException;
+import java.io.OutputStream;
 import netgame.controller.Controller;
 
 class GameDataGetHandler implements HttpHandler {
@@ -37,7 +35,8 @@ class GameDataGetHandler implements HttpHandler {
         response += String.format("yourID=%d\n", this.controller.getPlayerID(clientIp));
         response += String.format("drawingPlayerID=%s\n", drawingPlayerID);
         response += String.format("canvas=%s\n", this.controller.getCanvasData());
-        response += String.format("word=%s", word);
+        response += String.format("word=%s\n", word);
+        response += String.format("guesses=%s", this.controller.getGuesses());
 
         exchange.sendResponseHeaders(200, response.getBytes().length);  
         OutputStream os = exchange.getResponseBody();

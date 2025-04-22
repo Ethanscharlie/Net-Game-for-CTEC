@@ -1,9 +1,8 @@
 package netgame.controller;
 
+import java.util.Scanner;
 import netgame.model.Game;
 import netgame.view.WebServer;
-
-import java.util.Scanner;
 
 public class Controller
 {
@@ -100,5 +99,20 @@ public class Controller
 		}
 
 		this.game.drawingPlayerID = index;
+	}
+
+	public void resetGuesses()
+	{
+		this.game.guesses = "";
+	}
+
+	public void addGuess(String guess, int userID)
+	{
+		this.game.guesses += guess + "#" + userID + ",";
+	}
+
+	public String getGuesses()
+	{
+		return this.game.guesses;
 	}
 }
