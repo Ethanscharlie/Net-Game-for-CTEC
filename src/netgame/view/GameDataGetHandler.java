@@ -41,7 +41,8 @@ class GameDataGetHandler implements HttpHandler {
         response += String.format("drawingPlayerID=%s\n", drawingPlayerID);
         response += String.format("canvas=%s\n", this.controller.getCanvasData());
         response += String.format("word=%s\n", word);
-        response += String.format("guesses=%s", this.controller.getGuesses());
+        response += String.format("guesses=%s\n", this.controller.getGuesses());
+        response += String.format("players=%s\n", this.controller.getPlayerList());
 
         exchange.sendResponseHeaders(200, response.getBytes().length);  
         OutputStream os = exchange.getResponseBody();

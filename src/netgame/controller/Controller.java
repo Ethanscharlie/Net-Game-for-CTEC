@@ -71,6 +71,18 @@ public class Controller
 	{
 		return this.game.players.get(id).name;
 	}
+
+	public String getPlayerList() 
+	{
+		String playerList = "";
+
+		for (Player player : this.game.players) 
+		{
+			playerList += player.name + ",";
+		}
+
+		return playerList;
+	}
 	
     /**
      * @return String URL of html canvas data
