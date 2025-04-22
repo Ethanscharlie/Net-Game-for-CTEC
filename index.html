@@ -173,7 +173,7 @@
 						let guesses = splitData[4].replace("guesses=", "");
 						let players = splitData[5].replace("players=", "").split(",");
 
-						isDrawingDiv.innerText = `${players[drawingPlayerID]} is drawing`;
+						isDrawingDiv.innerText = `${players[drawingPlayerID]} is drawing (ID: ${drawingPlayerID})`;
 
 						if (newCanvasData == "clear") {
 							clearCanvas();
