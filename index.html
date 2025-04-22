@@ -4,84 +4,110 @@
 			body {
 				background-color: burlywood;
 				margin-top: 50px;
+				box-sizing: border-box;
 			}
 
 			.align-left {
-				display: inline-block;
 				vertical-align: top;
 				margin: 20px;
+
+				float: left;
+				padding: 10px;
 			}
 
-			.align-right {
+			.row::after {
+			  content: "";
+			  display: table;
+			  clear: both;
 			}
 
 			#gamePanel {
 				background-color: gray;
-				width: 80%;
+				width: 90%;
+				height: 95%;
 				margin: auto; 
 				padding: 10px;
 			}
 
 			#guessPanel {
 				background-color: lightblue;
-				display: inline-block;
 				margin: 20px;
 				vertical-align: top;
-				height: 600px;
+				height: 90%;
+				width: 13%;
+
+				float: left;
+				padding: 10px;
 			}
 
 			canvas {
 				background-color: white;
-				margin: 30px;
-				display: inline-block;
+				margin: 20px;
+				/* display: inline-block; */
+
+				float: left;
+				padding: 10px;
+			}
+
+			#spectatorDiv {
+				display: inline;
 			}
 
 			#guessForm {
+				margin-top: 5%;
+			}
+
+			#guesses {
+				height: 95%;
+				background-color: antiquewhite;
+				overflow: scroll;
 			}
 		</style>
 	</head>
 
     <body>
 		<div id="gamePanel">
-			<h1 id="gameTitle">Pictionary</h1>
-  	      	<div id="MyID"></div>
-  	      	<div id="responseDiv"></div>
+			<div class="row">
+				<div id="drawInputPanel" class="align-left">
+					<h1 id="gameTitle">Pictionary</h1>
+  			      	<div id="MyID"></div>
 
-			<div id="drawInputPanel" class="align-left">
-				<div class="slidecontainer">
-					<input type="range" min="1" max="20" value="1" class="slider" id="strokeWidthRange">
+					<div id="spectatorDiv">
+						<label>Spectator</label>
+						<input type="checkbox" id="Spectator" name="Spectator" value="false">
+					</div>
+
+  			      	<div id="responseDiv"></div>
+
+
+
+
+					<div class="slidecontainer">
+						<input type="range" min="1" max="20" value="1" class="slider" id="strokeWidthRange">
+					</div>
+
+					<button onclick="setPenColor(`blue`)">Set Color Blue</button><br>
+					<button onclick="setPenColor(`green`)">Set Color Green</button><br>
+					<button onclick="setPenColor(`red`)">Set Color Red</button><br>
+					<button onclick="setPenColor(`yellow`)">Set Color Yellow</button><br>
+					<button onclick="setPenColor(`orange`)">Set Color Orange</button><br>
+					<button onclick="setPenColor(`white`)">Set Color White</button><br>
+					<button onclick="setPenColor(`black`)">Set Color Black</button><br>
+					<button onclick="clearCanvas()">Clear Canvas</button><br>
 				</div>
 
-				<button onclick="setPenColor(`blue`)">Set Color Blue</button><br>
-				<button onclick="setPenColor(`green`)">Set Color Green</button><br>
-				<button onclick="setPenColor(`red`)">Set Color Red</button><br>
-				<button onclick="setPenColor(`yellow`)">Set Color Yellow</button><br>
-				<button onclick="setPenColor(`orange`)">Set Color Orange</button><br>
-				<button onclick="setPenColor(`white`)">Set Color White</button><br>
-				<button onclick="setPenColor(`black`)">Set Color Black</button><br>
-				<button onclick="clearCanvas()">Clear Canvas</button><br>
-			</div>
+				<canvas id="myCanvas" width="1400" height="900" style="border:1px solid #000000;"></canvas>
 
-			<canvas id="myCanvas" width="800" height="600" style="border:1px solid #000000;"></canvas>
+				<div id="guessPanel">
+					<div id="guesses">
+						<p>Message</p><p>Message</p><p>Message</p><p>Message</p><p>Message</p><p>Message</p><p>Message</p><p>Message</p><p>Message</p><p>Message</p><p>Message</p><p>Message</p><p>Message</p><p>Message</p><p>Message</p><p>Message</p><p>Message</p><p>Message</p><p>Message</p><p>Message</p><p>Message</p><p>Message</p><p>Message</p><p>Message</p><p>Message</p><p>Message</p><p>Message</p><p>Message</p><p>Message</p><p>Message</p><p>Message</p><p>Message</p>
+					</div>
 
-			<div class="align-right" id="guessPanel">
-				<div id="guesses">
-					<p>Message</p>
-					<p>Message</p>
-					<p>Message</p>
-					<p>Message</p>
-					<p>Message</p>
-					<p>Message</p>
-					<p>Message</p>
-					<p>Message</p>
-					<p>Message</p>
-					<p>Message</p>
+					<form id="guessForm">
+						<input type="text" id="guess" name="guess">
+						<input type="submit" value="Submit">
+					</form> 
 				</div>
-				
-				<form id="guessForm">
-					<input type="text" id="guess" name="guess">
-					<input type="submit" value="Submit">
-				</form> 
 			</div>
 		</div>
 
