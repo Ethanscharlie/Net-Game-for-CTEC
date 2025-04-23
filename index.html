@@ -91,7 +91,7 @@
   			      	<div id="isDrawingDiv"></div>
 
 					<br>
-  			      	<div id="playersDiv"></div>
+  			      	<ol id="playersDiv"></ol>
 					<br>
 
 
@@ -205,7 +205,7 @@
 
 						let playersNewHTML = "";
 						players.forEach(player => {
-							playersNewHTML += `<p>${player}</p>`;
+							playersNewHTML += `<li>${player}</li>`;
 						});
 						playersDiv.innerHTML = playersNewHTML;
                     })

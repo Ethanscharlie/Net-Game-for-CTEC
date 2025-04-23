@@ -78,7 +78,7 @@ public class Controller
 
 		for (Player player : this.game.players) 
 		{
-			playerList += player.name + "#" + this.game.players.indexOf(player) + ",";
+			playerList += player.name + ",";
 		}
 
 		return playerList;
