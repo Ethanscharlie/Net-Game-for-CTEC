@@ -122,15 +122,11 @@ public class Controller
 
 	public void changePlayers()
 	{
-		final int currentPlayerID = this.game.drawingPlayerID;
-
-		int index = currentPlayerID; 
-		while (index == currentPlayerID) 
+		this.game.drawingPlayerID  ++;
+		if (this.game.drawingPlayerID >= this.game.players.size()) 
 		{
-			index = (int)(Math.random() * this.game.players.size()); 
+			this.game.drawingPlayerID = 0;
 		}
-
-		this.game.drawingPlayerID = index;
 	}
 
 	public void resetGuesses()
