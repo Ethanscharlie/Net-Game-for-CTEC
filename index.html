@@ -110,15 +110,15 @@
 					</div>
 
 					<div id="colorButtons">
-						<button onclick="setPenColor(`blue`)">🟦</button>
-						<button onclick="setPenColor(`green`)">🟩</button>
-						<button onclick="setPenColor(`red`)">🟥</button>
-						<button onclick="setPenColor(`yellow`)">🟨</button>
+						<button onclick="setPenColor(`blue`)">Blue</button>
+						<button onclick="setPenColor(`green`)">Green</button>
+						<button onclick="setPenColor(`red`)">Red</button>
+						<button onclick="setPenColor(`yellow`)">Yellow</button>
 						<br>
-						<button onclick="setPenColor(`orange`)">🟧</button>
-						<button onclick="setPenColor(`brown`)">🟫</button>
-						<button onclick="setPenColor(`white`)">⬜</button>
-						<button onclick="setPenColor(`black`)">⬛</button>
+						<button onclick="setPenColor(`orange`)">Orange</button>
+						<button onclick="setPenColor(`brown`)">Brown</button>
+						<button onclick="setPenColor(`white`)">White</button>
+						<button onclick="setPenColor(`black`)">Black</button>
 					</div>
 
 					<br>
@@ -187,7 +187,7 @@
 						let newCanvasData = splitData[2].replace("canvas=", "");
 						let word = splitData[3].replace("word=", "");
 						let guesses = splitData[4].replace("guesses=", "");
-						let players = splitData[5].replace("players=", "").split(",");
+						let players = splitData[5].slice(0, -1).replace("players=", "").split(",");
 
 						isDrawingDiv.innerText = `${players[drawingPlayerID]} is drawing (ID: ${drawingPlayerID})`;
 
