@@ -47,7 +47,6 @@
 				/* display: inline-block; */
 
 				float: left;
-				padding: 10px;
 				width: 40%;
 			}
 
@@ -223,27 +222,27 @@
 				ctx.clearRect(0, 0, canvas.width, canvas.height);
 			}
 
+			function getMousePos(evt) {
+			    var rect = canvas.getBoundingClientRect();
+			    return {
+			        x: (evt.clientX - rect.left) / (rect.right - rect.left) * canvas.width,
+			        y: (evt.clientY - rect.top) / (rect.bottom - rect.top) * canvas.height
+			    };
+			}
+
 			canvas.addEventListener('mousedown', (e) => {
-				var rect = canvas.getBoundingClientRect();
-				var widthScale = canvas.width / rect.width;
-				var heightScale = canvas.height / rect.height;
-				var mouseX = (e.clientX - rect.left) * widthScale;
-				var mouseY = (e.clientY - rect.top) * heightScale;
+				var mousePos = getMousePos(e);
 
 			  drawing = true;
 			  ctx.beginPath();
-			  ctx.moveTo(mouseX, mouseY);
+			  ctx.moveTo(mousePos.x, mousePos.y);
 			});
 		 
 			canvas.addEventListener('mousemove', (e) => {
-				var rect = canvas.getBoundingClientRect();
-				var widthScale = canvas.width / rect.width;
-				var heightScale = canvas.height / rect.height;
-				var mouseX = (e.clientX - rect.left) * widthScale;
-				var mouseY = (e.clientY - rect.top) * heightScale;
+				var mousePos = getMousePos(e);
 
 			  if (drawing) {
-			    ctx.lineTo(mouseX, mouseY);
+			    ctx.lineTo(mousePos.x, mousePos.y);
 			    ctx.stroke();
 			  }
 			});
