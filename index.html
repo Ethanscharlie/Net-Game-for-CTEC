@@ -2,9 +2,14 @@
 	<head>
 		<style>
 			body {
-				background-color: burlywood;
 				margin-top: 50px;
 				box-sizing: border-box;
+
+				/* https://superdesigner.co/tools/css-backgrounds */
+				background: radial-gradient(transparent 34%, #fac405 35%, #fac405 45%, transparent 46%), radial-gradient(circle at left, transparent 39%, #fac40580 40%, #fac40580 45%, transparent 46%), radial-gradient(circle at right, transparent 39%, #fac40580 40%, #fac40580 45%, transparent 46%);
+        		background-size: 4em 4em;
+        		background-color: #000000;
+        		opacity: 1
 			}
 
 			.align-left {
@@ -13,7 +18,9 @@
 
 				float: left;
 				padding: 10px;
-				width: 15%;
+				width: 25%;
+
+				background-color: antiquewhite;
 			}
 
 			.row::after {
@@ -23,7 +30,7 @@
 			}
 
 			#gamePanel {
-				background-color: gray;
+				/* background-color: gray; */
 				width: 90%;
 				height: 95%;
 				margin: auto; 
@@ -33,9 +40,9 @@
 			#guessPanel {
 				background-color: lightblue;
 				margin: 20px;
-				vertical-align: top;
-				height: 90%;
-				width: 20%;
+				/* vertical-align: top; */
+				/* height: 90%; */
+				/* width: 20%; */
 
 				float: left;
 				padding: 10px;
@@ -47,7 +54,7 @@
 				/* display: inline-block; */
 
 				float: left;
-				width: 40%;
+				width: 60%;
 			}
 
 			.oneLineDiv {
@@ -59,7 +66,7 @@
 			}
 
 			#guesses {
-				height: 95%;
+				height: 40%;
 				background-color: antiquewhite;
 				overflow: scroll;
 			}
@@ -110,9 +117,6 @@
 					<button onclick="setPenColor(`white`)">Set Color White</button><br>
 					<button onclick="setPenColor(`black`)">Set Color Black</button><br>
 					<button onclick="clearCanvas()">Clear Canvas</button><br>
-				</div>
-
-				<canvas id="myCanvas" width="800" height="800" style="border:1px solid #000000;"></canvas>
 
 				<div id="guessPanel">
 					<div id="guesses">
@@ -125,6 +129,10 @@
 						<input type="submit" value="Submit">
 					</form> 
 				</div>
+				</div>
+
+				<canvas id="myCanvas" width="800" height="600" style="border:1px solid #000000;"></canvas>
+
 			</div>
 		</div>
 
