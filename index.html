@@ -47,6 +47,7 @@
 
 				float: left;
 				padding: 10px;
+				width: 50%;
 			}
 
 			.oneLineDiv {
@@ -111,7 +112,7 @@
 					<button onclick="clearCanvas()">Clear Canvas</button><br>
 				</div>
 
-				<canvas id="myCanvas" width="1200" height="900" style="border:1px solid #000000;"></canvas>
+				<canvas id="myCanvas" width="800" height="800" style="border:1px solid #000000;"></canvas>
 
 				<div id="guessPanel">
 					<div id="guesses">
@@ -220,16 +221,28 @@
 			{
 				ctx.clearRect(0, 0, canvas.width, canvas.height);
 			}
-			
+
 			canvas.addEventListener('mousedown', (e) => {
+				var rect = canvas.getBoundingClientRect();
+				var widthScale = canvas.width / rect.width;
+				var heightScale = canvas.height / rect.height;
+				var mouseX = (e.clientX - rect.left) * widthScale;
+				var mouseY = (e.clientY - rect.top) * heightScale;
+
 			  drawing = true;
 			  ctx.beginPath();
-			  ctx.moveTo(e.offsetX, e.offsetY);
+			  ctx.moveTo(mouseX, mouseY);
 			});
 		 
 			canvas.addEventListener('mousemove', (e) => {
+				var rect = canvas.getBoundingClientRect();
+				var widthScale = canvas.width / rect.width;
+				var heightScale = canvas.height / rect.height;
+				var mouseX = (e.clientX - rect.left) * widthScale;
+				var mouseY = (e.clientY - rect.top) * heightScale;
+
 			  if (drawing) {
-			    ctx.lineTo(e.offsetX, e.offsetY);
+			    ctx.lineTo(mouseX, mouseY);
 			    ctx.stroke();
 			  }
 			});
