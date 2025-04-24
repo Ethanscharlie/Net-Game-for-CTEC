@@ -109,13 +109,20 @@
 						<input type="range" min="1" max="100" value="1" class="slider" id="strokeWidthRange">
 					</div>
 
-					<button onclick="setPenColor(`blue`)">Set Color Blue</button><br>
-					<button onclick="setPenColor(`green`)">Set Color Green</button><br>
-					<button onclick="setPenColor(`red`)">Set Color Red</button><br>
-					<button onclick="setPenColor(`yellow`)">Set Color Yellow</button><br>
-					<button onclick="setPenColor(`orange`)">Set Color Orange</button><br>
-					<button onclick="setPenColor(`white`)">Set Color White</button><br>
-					<button onclick="setPenColor(`black`)">Set Color Black</button><br>
+					<div id="colorButtons">
+						<button onclick="setPenColor(`blue`)">🟦</button>
+						<button onclick="setPenColor(`green`)">🟩</button>
+						<button onclick="setPenColor(`red`)">🟥</button>
+						<button onclick="setPenColor(`yellow`)">🟨</button>
+						<br>
+						<button onclick="setPenColor(`orange`)">🟧</button>
+						<button onclick="setPenColor(`brown`)">🟫</button>
+						<button onclick="setPenColor(`white`)">⬜</button>
+						<button onclick="setPenColor(`black`)">⬛</button>
+					</div>
+
+					<br>
+
 					<button onclick="clearCanvas()">Clear Canvas</button><br>
 
 				<div id="guessPanel">
