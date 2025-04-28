@@ -3,6 +3,7 @@ package netgame.model;
 public class Player {
     public String ip = "";
     public String name = "";
+    public boolean spec = false;
 
     public Player(String ip, String name) 
     {

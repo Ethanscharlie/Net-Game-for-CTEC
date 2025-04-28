@@ -123,6 +123,15 @@ public class Controller
 	public void changePlayers()
 	{
 		this.game.drawingPlayerID  ++;
+		while (this.game.players.get(this.game.drawingPlayerID).spec) {
+			this.game.drawingPlayerID  ++;
+
+			if (this.game.drawingPlayerID >= this.game.players.size()) 
+			{
+				break;
+			}
+		}
+
 		if (this.game.drawingPlayerID >= this.game.players.size()) 
 		{
 			this.game.drawingPlayerID = 0;
@@ -142,5 +151,9 @@ public class Controller
 	public String getGuesses()
 	{
 		return this.game.guesses;
+	}
+
+	public void setPlayerSpec(int id, boolean spec) {
+		this.game.players.get(id).spec = spec;
 	}
 }
