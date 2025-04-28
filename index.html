@@ -105,7 +105,7 @@
 			}
 
 			#guesses {
-				height: 40%;
+				height: 300px;
 				background-color:#444444;
 				overflow: scroll;
 			}
@@ -227,7 +227,7 @@
 						let drawingPlayerID = splitData[1].replace("drawingPlayerID=", "");
 						let newCanvasData = splitData[2].replace("canvas=", "");
 						let word = splitData[3].replace("word=", "");
-						let guesses = splitData[4].replace("guesses=", "");
+						let guesses = splitData[4].replace("guesses=", "").replace("null", "");
 						let players = splitData[5].slice(0, -1).replace("players=", "").split(",");
 
 						isDrawingDiv.innerText = `${players[drawingPlayerID]} is drawing (ID: ${drawingPlayerID})`;
