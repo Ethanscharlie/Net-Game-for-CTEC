@@ -21,14 +21,14 @@ class MainHandler implements HttpHandler {
 		String response = "Please pick a room id";
 		String room = "";
 
-		if (exchange.getRequestURI().toString().contains("?")) {
+		if (exchange.getRequestURI().getRawQuery() != null) {
   		    final String query = exchange.getRequestURI().getQuery();
 			room = query.replace("room=", "");
         	response = this.webServer.getHTML().replace("`#INSERTROOMIDHERE`", room);
-		}
 
-	    final String clientIp = exchange.getRemoteAddress().getAddress().getHostAddress();
-		this.controller.registerPlayer(room, clientIp);
+	 		final String clientIp = exchange.getRemoteAddress().getAddress().getHostAddress();
+			this.controller.registerPlayer(room, clientIp);
+		}
 
         exchange.sendResponseHeaders(200, response.getBytes().length);  
         OutputStream os = exchange.getResponseBody();
