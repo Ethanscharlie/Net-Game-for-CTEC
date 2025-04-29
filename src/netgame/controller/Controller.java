@@ -1,5 +1,6 @@
 package netgame.controller;
 
+import java.util.HashMap;
 import java.util.Scanner;
 import netgame.model.Game;
 import netgame.model.Player;
@@ -7,14 +8,22 @@ import netgame.view.WebServer;
 
 public class Controller
 {
-	private Game game;
+	private HashMap<String, Game> rooms;
 	private WebServer server;
 
 	public Controller()
 	{
 		this.server = new WebServer(this);
-		this.game = new Game();
-		this.newWord();
+		this.rooms = new HashMap<>();
+
+		this.rooms.put("0", new Game());
+		this.rooms.put("1", new Game());
+		this.rooms.put("2", new Game());
+		this.rooms.put("3", new Game());
+		this.newWord("0");
+		this.newWord("1");
+		this.newWord("2");
+		this.newWord("3");
 
 		// Handle closing
 		Scanner scanner = new Scanner(System.in);
@@ -31,27 +40,27 @@ public class Controller
      * @param ip Local ip address of the client
      * @return The ID given to the player
      */
-    public int registerPlayer(String ip)
+    public int registerPlayer(String room, String ip)
     {
-        if (getPlayerID(ip) != -1) 
+        if (getPlayerID(room, ip) != -1) 
         {
             System.out.println("Couldn't register player, player already has been registered");
             return -1;
         }
 
-        this.game.players.add(new Player(ip, ""));
-        return this.game.players.size() - 1;
+        rooms.get(room).players.add(new Player(ip, ""));
+        return rooms.get(room).players.size() - 1;
     }
 
 	/**
 	 * @param ip The local ip of the client
 	 * @return THe ID given to the player
 	 */
-	public int getPlayerID(String ip) 
+	public int getPlayerID(String room, String ip) 
     {
-		for (int index = 0; index < game.players.size(); index ++)
+		for (int index = 0; index < rooms.get(room).players.size(); index ++)
 		{
-			if (!game.players.get(index).ip.equals(ip))
+			if (!rooms.get(room).players.get(index).ip.equals(ip))
 			{
 				continue;
 			}
@@ -62,21 +71,21 @@ public class Controller
 		return -1;
 	}
 
-	public void setPlayerName(int id, String name) 
+	public void setPlayerName(String room, int id, String name) 
 	{
-		this.game.players.get(id).name = name;
+		rooms.get(room).players.get(id).name = name;
 	}
 	
-	public String getPlayerName(int id) 
+	public String getPlayerName(String room, int id) 
 	{
-		return this.game.players.get(id).name;
+		return rooms.get(room).players.get(id).name;
 	}
 
-	public String getPlayerList() 
+	public String getPlayerList(String room) 
 	{
 		String playerList = "";
 
-		for (Player player : this.game.players) 
+		for (Player player : rooms.get(room).players) 
 		{
 			playerList += player.name + ",";
 		}
@@ -87,73 +96,73 @@ public class Controller
     /**
      * @return String URL of html canvas data
      */
-    public String getCanvasData()
+    public String getCanvasData(String room)
     {
-        return this.game.canvasData;
+        return rooms.get(room).canvasData;
     }
 
     /**
      * @param canvasData Set the string URL of html canvas data
      */
-    public void setCanvasData(String canvasData) 
+    public void setCanvasData(String room, String canvasData) 
     {
-        this.game.canvasData = canvasData;
+        rooms.get(room).canvasData = canvasData;
     }
 
 	/**
 	 * @return The id of the player who is the current drawer
 	 */
-	public int getDrawingPlayerID()
+	public int getDrawingPlayerID(String room)
 	{
-		return this.game.drawingPlayerID;
+		return rooms.get(room).drawingPlayerID;
 	}
 
-	public String newWord() 
+	public String newWord(String room) 
 	{
-		int index = (int)(Math.random() * this.game.words.size()); 
-		this.game.word = this.game.words.get(index);
-		return this.game.word;
+		int index = (int)(Math.random() * rooms.get(room).words.size()); 
+		rooms.get(room).word = rooms.get(room).words.get(index);
+		return rooms.get(room).word;
 	}
 
-	public String getWord()
+	public String getWord(String room)
 	{
-		return this.game.word;
+		return rooms.get(room).word;
 	}
 
-	public void changePlayers()
+	public void changePlayers(String room)
 	{
-		this.game.drawingPlayerID  ++;
-		while (this.game.players.get(this.game.drawingPlayerID).spec) {
-			this.game.drawingPlayerID  ++;
+		rooms.get(room).drawingPlayerID  ++;
+		while (rooms.get(room).players.get(rooms.get(room).drawingPlayerID).spec) {
+			rooms.get(room).drawingPlayerID  ++;
 
-			if (this.game.drawingPlayerID >= this.game.players.size()) 
+			if (rooms.get(room).drawingPlayerID >= rooms.get(room).players.size()) 
 			{
 				break;
 			}
 		}
 
-		if (this.game.drawingPlayerID >= this.game.players.size()) 
+		if (rooms.get(room).drawingPlayerID >= rooms.get(room).players.size()) 
 		{
-			this.game.drawingPlayerID = 0;
+			rooms.get(room).drawingPlayerID = 0;
 		}
 	}
 
-	public void resetGuesses()
+	public void resetGuesses(String room)
 	{
-		this.game.guesses = "";
+		rooms.get(room).guesses = "";
 	}
 
-	public void addGuess(String guess, int userID)
+	public void addGuess(String room, String guess, int userID)
 	{
-		this.game.guesses += guess + "  #  " + getPlayerName(userID) + ",";
+		rooms.get(room).guesses += guess + "  #  " + getPlayerName(room, userID) + ",";
 	}
 
-	public String getGuesses()
+	public String getGuesses(String room)
 	{
-		return this.game.guesses;
+		return rooms.get(room).guesses;
 	}
 
-	public void setPlayerSpec(int id, boolean spec) {
-		this.game.players.get(id).spec = spec;
+	public void setPlayerSpec(String room, int id, boolean spec) {
+		rooms.get(room).players.get(id).spec = spec;
 	}
 }

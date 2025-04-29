@@ -1,18 +1,16 @@
 package netgame.view;
 
+import com.sun.net.httpserver.HttpServer;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.Scanner;
-
-import com.sun.net.httpserver.HttpServer;
-
 import netgame.controller.Controller;
 
 public class WebServer
 {
-	public final int port = 3000;
+	public final int port = 3001;
 
 	private Controller controller;
 

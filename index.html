@@ -185,6 +185,7 @@
 		</div>
 
         <script>
+			let roomID = `#INSERTROOMIDHERE`;
 			let userID = 0;
 
 			let canvas = document.getElementById("myCanvas");
@@ -209,14 +210,14 @@
 
 				let guess = document.getElementById("guess").value;
 				document.getElementById("guess").value = "";
-                fetch(`/guess?guess=${guess}`)
+                fetch(`/guess?guess=${guess}&room=${roomID}`)
                     .then(response => response.text())
                     .then(data => {})
                     .catch(error => console.error('Error:', error));
 			});
 
             function sendGetRequest() {
-                fetch(`/getgamedata?name=${nameInputElement.value}&spec=${false}&canvas=${canvas.toDataURL()}`)
+                fetch(`/getgamedata?room=${roomID}&name=${nameInputElement.value}&spec=${false}&canvas=${canvas.toDataURL()}`)
                     .then(response => response.text())
                     .then(data => {
 						let splitData = data.split("\n");

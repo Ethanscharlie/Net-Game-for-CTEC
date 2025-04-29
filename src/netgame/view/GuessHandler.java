@@ -21,23 +21,25 @@ public class GuessHandler implements HttpHandler
     public void handle(HttpExchange exchange) throws IOException
     {
 	    final String clientIp = exchange.getRemoteAddress().getAddress().getHostAddress();
-        final String query = exchange.getRequestURI().getQuery();
-        final int drawingPlayerID = this.controller.getDrawingPlayerID();
+        final String[] querys = exchange.getRequestURI().getQuery().split("&");
+        final String room = querys[1].replace("room=", "");
 
-        if (this.controller.getPlayerID(clientIp) != drawingPlayerID) 
+        final int drawingPlayerID = this.controller.getDrawingPlayerID(room);
+
+        if (this.controller.getPlayerID(room, clientIp) != drawingPlayerID) 
         {
-            final String guess = query.replace("guess=", "");
-            this.controller.addGuess(guess, this.controller.getPlayerID(clientIp));
+            final String guess = querys[0].replace("guess=", "");
+            this.controller.addGuess(room, guess, this.controller.getPlayerID(room, clientIp));
 
-            final String correctGuess = this.controller.getWord();
+            final String correctGuess = this.controller.getWord(room);
 
             if (guess.equalsIgnoreCase(correctGuess)) 
             {
                 System.out.println("User got it correct!");
-                this.controller.changePlayers();
-                this.controller.newWord();
-                this.controller.setCanvasData("clear");
-                this.controller.resetGuesses();
+                this.controller.changePlayers(room);
+                this.controller.newWord(room);
+                this.controller.setCanvasData(room, "clear");
+                this.controller.resetGuesses(room);
             }
         }
 

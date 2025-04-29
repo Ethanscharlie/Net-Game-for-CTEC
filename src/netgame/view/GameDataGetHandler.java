@@ -20,40 +20,42 @@ class GameDataGetHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         final String clientIp = exchange.getRemoteAddress().getAddress().getHostAddress();
-        final int drawingPlayerID = this.controller.getDrawingPlayerID();
 
         // Request
         final String query = exchange.getRequestURI().getQuery();
         final String[] querys = query.split("&");
-        final String name = querys[0].replace("name=", "");
-        final String specString = querys[1].replace("spec=", "");
-        final String canvasData = querys[2].replace("canvas=", "");
+        final String room = querys[0].replace("room=", "");
+        final String name = querys[1].replace("name=", "");
+        final String specString = querys[2].replace("spec=", "");
+        final String canvasData = querys[3].replace("canvas=", "");
+
+        final int drawingPlayerID = this.controller.getDrawingPlayerID(room);
 
         String word = "noneyo";
-        if (this.controller.getPlayerID(clientIp) == drawingPlayerID) {
-            word = this.controller.getWord();
+        if (this.controller.getPlayerID(room, clientIp) == drawingPlayerID) {
+            word = this.controller.getWord(room);
         }
 
-        this.controller.setPlayerName(this.controller.getPlayerID(clientIp), name);
+        this.controller.setPlayerName(room, this.controller.getPlayerID(room, clientIp), name);
 
-        this.controller.setPlayerSpec(this.controller.getPlayerID(clientIp), specString.equals("true"));
+        this.controller.setPlayerSpec(room, this.controller.getPlayerID(room, clientIp), specString.equals("true"));
 
         // Response
         String response = "";
-        response += String.format("yourID=%d\n", this.controller.getPlayerID(clientIp));
+        response += String.format("yourID=%d\n", this.controller.getPlayerID(room, clientIp));
         response += String.format("drawingPlayerID=%s\n", drawingPlayerID);
-        response += String.format("canvas=%s\n", this.controller.getCanvasData());
+        response += String.format("canvas=%s\n", this.controller.getCanvasData(room));
         response += String.format("word=%s\n", word);
-        response += String.format("guesses=%s\n", this.controller.getGuesses());
-        response += String.format("players=%s\n", this.controller.getPlayerList());
+        response += String.format("guesses=%s\n", this.controller.getGuesses(room));
+        response += String.format("players=%s\n", this.controller.getPlayerList(room));
 
         exchange.sendResponseHeaders(200, response.getBytes().length);  
         OutputStream os = exchange.getResponseBody();
         os.write(response.getBytes());
         os.close();
 
-        if (this.controller.getPlayerID(clientIp) == drawingPlayerID) {
-            this.controller.setCanvasData(canvasData);
+        if (this.controller.getPlayerID(room ,clientIp) == drawingPlayerID) {
+            this.controller.setCanvasData(room, canvasData);
         }
 
     }

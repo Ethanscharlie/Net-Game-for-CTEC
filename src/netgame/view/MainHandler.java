@@ -1,11 +1,9 @@
 package netgame.view;
 
-import java.io.IOException;
-import java.io.OutputStream;
-
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-
+import java.io.IOException;
+import java.io.OutputStream;
 import netgame.controller.Controller;
 
 class MainHandler implements HttpHandler {
@@ -20,10 +18,17 @@ class MainHandler implements HttpHandler {
 	
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-	    final String clientIp = exchange.getRemoteAddress().getAddress().getHostAddress();
-		this.controller.registerPlayer(clientIp);
+		String response = "Please pick a room id";
+		String room = "";
 
-        String response = this.webServer.getHTML();
+		if (exchange.getRequestURI().toString().contains("?")) {
+  		    final String query = exchange.getRequestURI().getQuery();
+			room = query.replace("room=", "");
+        	response = this.webServer.getHTML().replace("`#INSERTROOMIDHERE`", room);
+		}
+
+	    final String clientIp = exchange.getRemoteAddress().getAddress().getHostAddress();
+		this.controller.registerPlayer(room, clientIp);
 
         exchange.sendResponseHeaders(200, response.getBytes().length);  
         OutputStream os = exchange.getResponseBody();
