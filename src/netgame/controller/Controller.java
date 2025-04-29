@@ -52,6 +52,24 @@ public class Controller
         return rooms.get(room).players.size() - 1;
     }
 
+    public void removePlayer(String room, String ip)
+    {
+		int target = -1;
+		for (int index = 0; index < rooms.get(room).players.size(); index ++) {
+			Player player = rooms.get(room).players.get(index);
+			if (player.ip.equals(ip)) {
+				target = index;
+			}
+		}
+
+		if (target == -1) {
+            System.out.println("Couldn't remove player, player is not in room");
+			return;
+		}
+
+        rooms.get(room).players.remove(target);
+    }
+
 	/**
 	 * @param ip The local ip of the client
 	 * @return THe ID given to the player
