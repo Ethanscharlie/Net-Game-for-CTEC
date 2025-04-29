@@ -23,8 +23,8 @@ public class WebServer
 		this.controller = controller;
 
 		final String css = readFromFile("style.css");
-		this.gameHTML = readFromFile("game.html").replace("INSERSTYLEHERE", css);
-		this.roomsHTML = readFromFile("rooms.html").replace("INSERSTYLEHERE", css);
+		this.gameHTML = readFromFile("game.html").replace("/* INSERSTYLEHERE */", css);
+		this.roomsHTML = readFromFile("rooms.html").replace("/* INSERSTYLEHERE */", css);
 
 		this.openWebserver();
 	}
