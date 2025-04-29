@@ -15,12 +15,16 @@ public class WebServer
 	private Controller controller;
 
 	private HttpServer server;
-	private String html;
+	private String gameHTML;
+	private String roomsHTML;
 
 	public WebServer(Controller controller)
 	{
 		this.controller = controller;
-		this.html = readHTMLFromFile("index.html");
+
+		final String css = readFromFile("style.css");
+		this.gameHTML = readFromFile("game.html").replace("INSERSTYLEHERE", css);
+		this.roomsHTML = readFromFile("rooms.html").replace("INSERSTYLEHERE", css);
 
 		this.openWebserver();
 	}
@@ -56,8 +60,8 @@ public class WebServer
 	 * @param path The path to the .html file
 	 * @return HTML as a string
 	 */
-	private static String readHTMLFromFile(String path) {
-		String html = "";
+	private static String readFromFile(String path) {
+		String data = "";
 
 		try 
 		{
@@ -65,7 +69,7 @@ public class WebServer
 
 			while (scanner.hasNextLine()) {
 			    String line = scanner.nextLine();
-				html += line;
+				data += line;
 			}
 
 			scanner.close();
@@ -75,7 +79,7 @@ public class WebServer
 			e.printStackTrace();
 		}
 
-		return html;
+		return data;
 	}
 	
 	/**
@@ -88,9 +92,14 @@ public class WebServer
 	/**
 	 * @return HTML page for the server
 	 */
-	public String getHTML()
+	public String getGameHTML()
 	{
-		return this.html;
+		return this.gameHTML;
+	}
+
+	public String getRoomsHTML()
+	{
+		return this.roomsHTML;
 	}
 
 	/**

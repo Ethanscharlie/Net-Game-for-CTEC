@@ -18,13 +18,13 @@ class MainHandler implements HttpHandler {
 	
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-		String response = "Please pick a room id";
+		String response = this.webServer.getRoomsHTML();
 		String room = "";
 
 		if (exchange.getRequestURI().getRawQuery() != null) {
   		    final String query = exchange.getRequestURI().getQuery();
 			room = query.replace("room=", "");
-        	response = this.webServer.getHTML().replace("`#INSERTROOMIDHERE`", room);
+        	response = this.webServer.getGameHTML().replace("`#INSERTROOMIDHERE`", room);
 
 	 		final String clientIp = exchange.getRemoteAddress().getAddress().getHostAddress();
 			this.controller.registerPlayer(room, clientIp);

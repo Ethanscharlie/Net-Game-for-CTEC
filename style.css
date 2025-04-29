@@ -1,0 +1,42 @@
+body {
+	margin-top: 50px;
+	box-sizing: border-box;
+
+	/* If background doesn't work */
+	/* https://superdesigner.co/tools/css-backgrounds */
+	/* background: radial-gradient(transparent 34%, #fac405 35%, #fac405 45%, transparent 46%), radial-gradient(circle at left, transparent 39%, #fac40580 40%, #fac40580 45%, transparent 46%), radial-gradient(circle at right, transparent 39%, #fac40580 40%, #fac40580 45%, transparent 46%);
+     		background-size: 4em 4em;
+     		background-color: #000000;
+     		opacity: 1; */
+
+	background-image: url("https://img.freepik.com/free-photo/space-background-realistic-starry-night-cosmos-shining-stars-milky-way-stardust-color-galaxy_1258-154750.jpg?t=st=1745848444~exp=1745852044~hmac=8380f56cad8b76505608e1e722481475634ba1e32abb9b0b3fe71198926c4103&w=2000");
+	background-size: cover;
+
+	font-family: "Orbitron", sans-serif;
+}
+
+.crt {
+	/* scanlines */
+  background: linear-gradient(to top, #000000, #000000, #333333, #333333);
+			
+  /* text */
+  color: #00ff00;
+  text-shadow: 0 0 10px #00ff00;
+}
+
+button {
+	background-color: #444444;
+  color: #ff0000;
+  text-shadow: 0 0 10px #ff0000;
+}
+
+input {
+	background-color: #444444;
+  color: #00ffff;
+  text-shadow: 0 0 10px #00ffff;
+}
+
+li {
+  color: #ffff00;
+  text-shadow: 0 0 10px #ffff00;
+}
