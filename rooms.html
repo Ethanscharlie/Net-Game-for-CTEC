@@ -25,6 +25,9 @@
 						let splitData = data.slice(0, -1).split(",");
 
                         buttonsDiv.innerHTML = "";
+                        if (splitData == "") {
+                            return
+                        }
 
                         splitData.forEach(room => {
                             buttonsDiv.innerHTML += getNewRoomButton(room);

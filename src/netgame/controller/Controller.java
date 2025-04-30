@@ -177,8 +177,23 @@ public class Controller
 		rooms.get(room).players.get(id).spec = spec;
 	}
 
+	public void removeEmptyRooms()
+	{
+		for (Map.Entry<String, Game> entry : rooms.entrySet()) {
+			final String name = entry.getKey();
+			final Game game = entry.getValue();
+
+			if (game.players.isEmpty()) 
+			{
+				rooms.remove(name);
+			}
+		}
+	}
+
 	public String getRoomsString()
 	{
+		removeEmptyRooms();
+
 		String str = "";
 
 		for (Map.Entry<String, Game> entry : rooms.entrySet()) {
