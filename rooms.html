@@ -10,16 +10,46 @@
         <div id="roomsMain" class="crt">
             <h1>Welcome to Space Pictionary</h1>
 
-            <button class="roomButton"><a href="/?room=0">Go to Room 0</a></button>
-            <br>
-            <br>
-            <button class="roomButton"><a href="/?room=1">Go to Room 1</a></button>
-            <br>
-            <br>
-            <button class="roomButton"><a href="/?room=2">Go to Room 2</a></button>
-            <br>
-            <br>
-            <button class="roomButton"><a href="/?room=3">Go to Room 3</a></button>
+            <div id="buttons"></div>
+
+            <button onclick="createRoom()">Create Room</button>
         </div>
+
+        <script>
+            let buttonsDiv = document.getElementById("buttons");
+
+            function sendGetRoomsRequest() {
+                fetch(`/getrooms`)
+                    .then(response => response.text())
+                    .then(data => {
+						let splitData = data.slice(0, -1).split(",");
+
+                        buttonsDiv.innerHTML = "";
+
+                        splitData.forEach(room => {
+                            buttonsDiv.innerHTML += getNewRoomButton(room);
+                            buttonsDiv.innerHTML += "<br><br>";
+                        });
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+
+            function getNewRoomButton(name) {
+                return `<button class="roomButton"><a href=\"/?room=${name}\">Go to room: ${name}</a></button>`
+            }
+
+            function createRoom() {
+                fetch(`/addroom`)
+                    .then(response => response.text())
+                    .then(data => {})
+                    .catch(error => console.error('Error:', error));
+            }
+
+			window.setInterval(function(){
+                sendGetRoomsRequest();
+			}, 300);
+
+            sendGetRoomsRequest();
+        </script>
     </body>
 </html>

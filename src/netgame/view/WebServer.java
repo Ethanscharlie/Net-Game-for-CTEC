@@ -48,6 +48,8 @@ public class WebServer
         this.server.createContext("/getgamedata", new GameDataGetHandler(this));
         this.server.createContext("/guess", new GuessHandler(this));
         this.server.createContext("/leaveroom", new LeaveHandler(this));
+        this.server.createContext("/getrooms", new GetRoomsHandler(this));
+        this.server.createContext("/addroom", new AddRoomHandler(this));
         this.server.setExecutor(null); 
         this.server.start();
         

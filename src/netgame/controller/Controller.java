@@ -1,6 +1,8 @@
 package netgame.controller;
 
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 import java.util.Scanner;
 import netgame.model.Game;
 import netgame.model.Player;
@@ -182,5 +184,27 @@ public class Controller
 
 	public void setPlayerSpec(String room, int id, boolean spec) {
 		rooms.get(room).players.get(id).spec = spec;
+	}
+
+	public String getRoomsString()
+	{
+		String str = "";
+
+		for (Map.Entry<String, Game> entry : rooms.entrySet()) {
+			final String name = entry.getKey();
+			final Game game = entry.getValue();
+
+			str += name;
+			str += ",";
+		}
+
+		return str;
+	}
+
+	public void addRoom()
+	{
+		Random r = new Random();
+		Integer num = r.nextInt(10000);
+		rooms.put(num.toString(), new Game());
 	}
 }
