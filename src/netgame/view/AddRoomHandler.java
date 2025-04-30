@@ -18,9 +18,8 @@ public class AddRoomHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        this.controller.addRoom();
-
-        String response = "";
+        final String roomName = this.controller.addRoom();
+        String response = roomName;
         exchange.sendResponseHeaders(200, response.getBytes().length);  
         OutputStream os = exchange.getResponseBody();
         os.write(response.getBytes());

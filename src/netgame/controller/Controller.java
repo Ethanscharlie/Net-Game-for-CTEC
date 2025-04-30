@@ -201,10 +201,12 @@ public class Controller
 		return str;
 	}
 
-	public void addRoom()
+	public String addRoom()
 	{
 		Random r = new Random();
 		Integer num = r.nextInt(10000);
 		rooms.put(num.toString(), new Game());
+
+		return num.toString();
 	}
 }

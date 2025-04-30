@@ -41,7 +41,9 @@
             function createRoom() {
                 fetch(`/addroom`)
                     .then(response => response.text())
-                    .then(data => {})
+                    .then(data => {
+                        window.location.href = `/?room=${data}`
+                    })
                     .catch(error => console.error('Error:', error));
             }
 
