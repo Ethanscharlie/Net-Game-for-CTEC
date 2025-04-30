@@ -18,15 +18,6 @@ public class Controller
 		this.server = new WebServer(this);
 		this.rooms = new HashMap<>();
 
-		this.rooms.put("0", new Game());
-		this.rooms.put("1", new Game());
-		this.rooms.put("2", new Game());
-		this.rooms.put("3", new Game());
-		this.newWord("0");
-		this.newWord("1");
-		this.newWord("2");
-		this.newWord("3");
-
 		// Handle closing
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Type anything to close");
