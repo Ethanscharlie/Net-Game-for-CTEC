@@ -205,8 +205,11 @@ public class Controller
 	{
 		Random r = new Random();
 		Integer num = r.nextInt(10000);
-		rooms.put(num.toString(), new Game());
 
+		Game newGame = new Game();
+		rooms.put(num.toString(), newGame);
+
+		newWord(num.toString());
 		return num.toString();
 	}
 }
