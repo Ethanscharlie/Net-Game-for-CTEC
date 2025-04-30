@@ -30,6 +30,12 @@ button {
   text-shadow: 0 0 10px #ff0000;
 }
 
+button > a {
+	background-color: #444444;
+  color: #ff0000;
+  text-shadow: 0 0 10px #ff0000;
+}
+
 input {
 	background-color: #444444;
   color: #00ffff;
@@ -39,4 +45,16 @@ input {
 li {
   color: #ffff00;
   text-shadow: 0 0 10px #ffff00;
+}
+
+#roomsMain {
+	width: 400px;
+	margin: auto;
+	text-align: center;
+	padding: 20px;
+}
+
+.roomButton {
+	font-size: large;
+	padding: 20px;
 }
