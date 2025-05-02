@@ -143,14 +143,6 @@ public class Controller
 	public void changePlayers(String room)
 	{
 		rooms.get(room).drawingPlayerID  ++;
-		while (rooms.get(room).players.get(rooms.get(room).drawingPlayerID).spec) {
-			rooms.get(room).drawingPlayerID  ++;
-
-			if (rooms.get(room).drawingPlayerID >= rooms.get(room).players.size()) 
-			{
-				break;
-			}
-		}
 
 		if (rooms.get(room).drawingPlayerID >= rooms.get(room).players.size()) 
 		{
