@@ -5,6 +5,9 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * This class contians the game data, each rooms has an instance of game
+ */
 public class Game 
 {
 	public ArrayList<Player> players;
@@ -14,6 +17,9 @@ public class Game
     public String word;
     public String guesses;
 
+    /**
+     * Loads from the things to draw text file and initalizes data members
+     */
     public Game() 
     {
         players = new ArrayList<>();

@@ -8,6 +8,9 @@ import java.net.InetSocketAddress;
 import java.util.Scanner;
 import netgame.controller.Controller;
 
+/**
+ * Contains the server 
+ */
 public class WebServer
 {
 	public final int port = 3000;
@@ -18,6 +21,10 @@ public class WebServer
 	private String gameHTML;
 	private String roomsHTML;
 
+	/**
+	 * Loads the HTML for the pages and opens the web server
+	 * @param controller Uh the controller
+	 */
 	public WebServer(Controller controller)
 	{
 		this.controller = controller;
@@ -30,7 +37,7 @@ public class WebServer
 	}
 
 	/**
-	 * Function to start the server
+	 * Function to start the server, creates context at each url, giving our Handlers
 	 */
 	private void openWebserver()
 	{

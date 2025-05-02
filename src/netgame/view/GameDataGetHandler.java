@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.io.OutputStream;
 import netgame.controller.Controller;
 
+/**
+ * Handler to get the game state, should to accessed on an interval from the client
+ */
 class GameDataGetHandler implements HttpHandler {
     @SuppressWarnings("unused")
     private WebServer webServer;

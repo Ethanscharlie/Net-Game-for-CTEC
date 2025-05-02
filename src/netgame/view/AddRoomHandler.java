@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.io.OutputStream;
 import netgame.controller.Controller;
 
+/**
+ * Handler to add a new room
+ */
 public class AddRoomHandler implements HttpHandler {
     private WebServer webServer;
     private Controller controller;

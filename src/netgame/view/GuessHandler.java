@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.io.OutputStream;
 import netgame.controller.Controller;
 
+/**
+ * Handler to guess a string and check if it right
+ */
 public class GuessHandler implements HttpHandler
 {
 	private WebServer webServer;

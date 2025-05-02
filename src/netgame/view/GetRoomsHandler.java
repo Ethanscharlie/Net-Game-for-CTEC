@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.io.OutputStream;
 import netgame.controller.Controller;
 
+/**
+ * Handler to get each of the room names
+ */
 public class GetRoomsHandler implements HttpHandler 
 {
     private WebServer webServer;

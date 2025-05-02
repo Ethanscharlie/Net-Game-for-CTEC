@@ -1,9 +1,11 @@
 package netgame.model;
 
+/**
+ * Class fro the player, has a name and ip addr
+ */
 public class Player {
     public String ip = "";
     public String name = "";
-    public boolean spec = false;
 
     public Player(String ip, String name) 
     {
