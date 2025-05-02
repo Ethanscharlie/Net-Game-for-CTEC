@@ -8,11 +8,19 @@ import netgame.model.Game;
 import netgame.model.Player;
 import netgame.view.WebServer;
 
+/**
+ * Contains all the methods for the sever to interact with the game
+ */
 public class Controller
 {
 	private HashMap<String, Game> rooms;
 	private WebServer server;
 
+	/**
+	 * Constructor for Controller
+	 * 
+	 * Initalized server, rooms, and opens a scanner to handle server closing
+	 */
 	public Controller()
 	{
 		this.server = new WebServer(this);
@@ -30,6 +38,7 @@ public class Controller
     /**
 	 * Adds a client to the players list
 	 * 
+	 * @param room the room name
      * @param ip Local ip address of the client
      * @return The ID given to the player
      */
@@ -45,6 +54,10 @@ public class Controller
         return rooms.get(room).players.size() - 1;
     }
 
+	/**
+	 * @param room the room name
+	 * @param ip The local ip of the client
+	 */
     public void removePlayer(String room, String ip)
     {
 		int target = -1;
@@ -64,6 +77,7 @@ public class Controller
     }
 
 	/**
+	 * @param room the room name
 	 * @param ip The local ip of the client
 	 * @return THe ID given to the player
 	 */
@@ -82,16 +96,30 @@ public class Controller
 		return -1;
 	}
 
+	/**
+	 * @param room the room name
+	 * @param ip The local ip of the client
+	 * @param name The name for the player
+	 */
 	public void setPlayerName(String room, int id, String name) 
 	{
 		rooms.get(room).players.get(id).name = name;
 	}
 	
+	/**
+	 * @param room the room name
+	 * @param ip The local ip of the client
+	 * @return The players name
+	 */
 	public String getPlayerName(String room, int id) 
 	{
 		return rooms.get(room).players.get(id).name;
 	}
 
+	/**
+	 * @param room the room name
+	 * @return All the players in a single string sperated by commas 
+	 */
 	public String getPlayerList(String room) 
 	{
 		String playerList = "";
@@ -105,6 +133,7 @@ public class Controller
 	}
 	
     /**
+	 * @param room the room name
      * @return String URL of html canvas data
      */
     public String getCanvasData(String room)
@@ -113,6 +142,7 @@ public class Controller
     }
 
     /**
+	 * @param room the room name
      * @param canvasData Set the string URL of html canvas data
      */
     public void setCanvasData(String room, String canvasData) 
@@ -121,6 +151,7 @@ public class Controller
     }
 
 	/**
+	 * @param room the room name
 	 * @return The id of the player who is the current drawer
 	 */
 	public int getDrawingPlayerID(String room)
@@ -128,6 +159,11 @@ public class Controller
 		return rooms.get(room).drawingPlayerID;
 	}
 
+	/**
+	 * Grabs a new random word to set as the rooms word, and returns what that word is
+	 * @param room the room name
+	 * @return The new word
+	 */
 	public String newWord(String room) 
 	{
 		int index = (int)(Math.random() * rooms.get(room).words.size()); 
@@ -135,11 +171,19 @@ public class Controller
 		return rooms.get(room).word;
 	}
 
+	/**
+	 * @param room the room name
+	 * @return The current word to be guessed
+	 */
 	public String getWord(String room)
 	{
 		return rooms.get(room).word;
 	}
 
+	/**
+	 * Goes to the next player, if their at the end of the list then it goes to the first player
+	 * @param room the room name
+	 */
 	public void changePlayers(String room)
 	{
 		rooms.get(room).drawingPlayerID  ++;
@@ -150,25 +194,38 @@ public class Controller
 		}
 	}
 
+	/**
+	 * Resets the history of guesses in the guesses panel
+	 * @param room the room name
+	 */
 	public void resetGuesses(String room)
 	{
 		rooms.get(room).guesses = "";
 	}
 
+	/**
+	 * Adds a guess to the guess history
+	 * @param room the room name
+	 * @param guess the guess to add to the history
+	 * @param userID the id of the user
+	 */
 	public void addGuess(String room, String guess, int userID)
 	{
 		rooms.get(room).guesses += guess + "  #  " + getPlayerName(room, userID) + ",";
 	}
 
+	/**
+	 * @param room the room name
+	 * @return The guesses history seperated by commas
+	 */
 	public String getGuesses(String room)
 	{
 		return rooms.get(room).guesses;
 	}
 
-	public void setPlayerSpec(String room, int id, boolean spec) {
-		rooms.get(room).players.get(id).spec = spec;
-	}
-
+	/**
+	 * When called will remove all empty rooms from the rooms map
+	 */
 	public void removeEmptyRooms()
 	{
 		for (Map.Entry<String, Game> entry : rooms.entrySet()) {
@@ -182,6 +239,9 @@ public class Controller
 		}
 	}
 
+	/**
+	 * @return All room names seperated by commas
+	 */
 	public String getRoomsString()
 	{
 		removeEmptyRooms();
@@ -199,6 +259,10 @@ public class Controller
 		return str;
 	}
 
+	/**
+	 * Adds a new room with a randomly generated name
+	 * @return The new rooms name
+	 */
 	public String addRoom()
 	{
 		Random r = new Random();

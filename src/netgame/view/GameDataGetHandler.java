@@ -38,8 +38,6 @@ class GameDataGetHandler implements HttpHandler {
 
         this.controller.setPlayerName(room, this.controller.getPlayerID(room, clientIp), name);
 
-        this.controller.setPlayerSpec(room, this.controller.getPlayerID(room, clientIp), specString.equals("true"));
-
         // Response
         String response = "";
         response += String.format("yourID=%d\n", this.controller.getPlayerID(room, clientIp));
