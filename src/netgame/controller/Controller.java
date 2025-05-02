@@ -1,5 +1,8 @@
 package netgame.controller;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -196,10 +199,29 @@ public class Controller
 
 	/**
 	 * Resets the history of guesses in the guesses panel
+	 * And writes the guesses to a log
 	 * @param room the room name
 	 */
 	public void resetGuesses(String room)
 	{
+		File file = new File("guesslog.txt");
+		try {
+			file.createNewFile();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		final String guessesTxt = rooms.get(room).guesses;
+
+		FileWriter writer;
+		try {
+			writer = new FileWriter("guesslog.txt");
+			writer.write(guessesTxt);
+		writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 		rooms.get(room).guesses = "";
 	}
 
