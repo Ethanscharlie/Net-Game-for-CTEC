@@ -1,11 +1,8 @@
 package netgame.view;
 
 import com.sun.net.httpserver.HttpServer;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.util.Scanner;
 import netgame.controller.Controller;
 
 /**
@@ -29,9 +26,9 @@ public class WebServer
 	{
 		this.controller = controller;
 
-		final String css = readFromFile("style.css");
-		this.gameHTML = readFromFile("game.html").replace("/* INSERSTYLEHERE */", css);
-		this.roomsHTML = readFromFile("rooms.html").replace("/* INSERSTYLEHERE */", css);
+		final String css = Controller.readFromFile("style.css");
+		this.gameHTML = Controller.readFromFile("game.html").replace("/* INSERSTYLEHERE */", css);
+		this.roomsHTML = Controller.readFromFile("rooms.html").replace("/* INSERSTYLEHERE */", css);
 
 		this.openWebserver();
 	}
@@ -63,34 +60,6 @@ public class WebServer
         System.out.printf("Server started on port %d\n", this.port);
 	}
 
-	/**
-	 * Reads HTML data into a string from a file
-	 * 
-	 * @param path The path to the .html file
-	 * @return HTML as a string
-	 */
-	private static String readFromFile(String path) {
-		String data = "";
-
-		try 
-		{
-			Scanner scanner = new Scanner(new File(path));
-
-			while (scanner.hasNextLine()) {
-			    String line = scanner.nextLine();
-				data += line;
-			}
-
-			scanner.close();
-		} 
-		catch (FileNotFoundException e) 
-		{
-			e.printStackTrace();
-		}
-
-		return data;
-	}
-	
 	/**
 	 * @return The Controller
 	 */

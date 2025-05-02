@@ -1,6 +1,7 @@
 package netgame.controller;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
@@ -294,4 +295,33 @@ public class Controller
 		newWord(num.toString());
 		return num.toString();
 	}
+
+	/**
+	 * Reads Text data into a string from a file
+	 * 
+	 * @param path The path to the file
+	 * @return Text as a string
+	 */
+	static public String readFromFile(String path) {
+		String data = "";
+
+		try 
+		{
+			Scanner scanner = new Scanner(new File(path));
+
+			while (scanner.hasNextLine()) {
+			    String line = scanner.nextLine();
+				data += line;
+			}
+
+			scanner.close();
+		} 
+		catch (FileNotFoundException e) 
+		{
+			e.printStackTrace();
+		}
+
+		return data;
+	}
+	
 }
