@@ -9,7 +9,9 @@ import netgame.controller.Controller;
 /**
  * Handler used by the client to properly leave a game
  */
-public class LeaveHandler implements HttpHandler {
+public class LeaveHandler implements HttpHandler 
+{
+    @SuppressWarnings("unused")
     private WebServer webServer;
     private Controller controller;
 

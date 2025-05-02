@@ -29,7 +29,6 @@ class GameDataGetHandler implements HttpHandler {
         final String[] querys = query.split("&");
         final String room = querys[0].replace("room=", "");
         final String name = querys[1].replace("name=", "");
-        final String specString = querys[2].replace("spec=", "");
         final String canvasData = querys[3].replace("canvas=", "");
 
         final int drawingPlayerID = this.controller.getDrawingPlayerID(room);

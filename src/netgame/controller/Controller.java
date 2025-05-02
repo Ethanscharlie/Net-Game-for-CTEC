@@ -272,8 +272,6 @@ public class Controller
 
 		for (Map.Entry<String, Game> entry : rooms.entrySet()) {
 			final String name = entry.getKey();
-			final Game game = entry.getValue();
-
 			str += name;
 			str += ",";
 		}

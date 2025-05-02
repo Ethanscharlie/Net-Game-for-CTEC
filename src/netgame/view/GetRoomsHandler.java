@@ -11,6 +11,7 @@ import netgame.controller.Controller;
  */
 public class GetRoomsHandler implements HttpHandler 
 {
+    @SuppressWarnings("unused")
     private WebServer webServer;
     private Controller controller;
 

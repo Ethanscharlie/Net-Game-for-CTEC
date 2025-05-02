@@ -10,6 +10,7 @@ import netgame.controller.Controller;
  * Handler to add a new room
  */
 public class AddRoomHandler implements HttpHandler {
+    @SuppressWarnings("unused")
     private WebServer webServer;
     private Controller controller;
 
