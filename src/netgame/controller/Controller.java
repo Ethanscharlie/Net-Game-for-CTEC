@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -19,6 +20,7 @@ public class Controller
 {
 	private HashMap<String, Game> rooms;
 	private WebServer server;
+	private String[] words;
 
 	/**
 	 * Constructor for Controller
@@ -29,6 +31,8 @@ public class Controller
 	{
 		this.server = new WebServer(this);
 		this.rooms = new HashMap<>();
+		
+		this.words = readFromFile("thingstodraw.txt").split("\n");
 
 		// Handle closing
 		Scanner scanner = new Scanner(System.in);
@@ -170,8 +174,8 @@ public class Controller
 	 */
 	public String newWord(String room) 
 	{
-		int index = (int)(Math.random() * rooms.get(room).words.size()); 
-		rooms.get(room).word = rooms.get(room).words.get(index);
+		int index = (int)(Math.random() * rooms.get(room).words.length); 
+		rooms.get(room).word = rooms.get(room).words[index];
 		return rooms.get(room).word;
 	}
 
@@ -289,7 +293,7 @@ public class Controller
 		Random r = new Random();
 		Integer num = r.nextInt(10000);
 
-		Game newGame = new Game();
+		Game newGame = new Game(words);
 		rooms.put(num.toString(), newGame);
 
 		newWord(num.toString());
@@ -312,6 +316,7 @@ public class Controller
 			while (scanner.hasNextLine()) {
 			    String line = scanner.nextLine();
 				data += line;
+				data += "\n";
 			}
 
 			scanner.close();
