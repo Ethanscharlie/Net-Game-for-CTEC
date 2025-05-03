@@ -1,0 +1,13 @@
+BasedOnStyle: Google
+Language: Java
+BraceWrapping:
+  AfterClass: true
+  AfterFunction: true
+  AfterEnum: true
+  AfterControlStatement: true
+  AfterNamespace: true
+  AfterStruct: true
+  SplitEmptyFunction: true
+BreakBeforeBraces: Custom
+IndentWidth: 4
+UseTab: Never
