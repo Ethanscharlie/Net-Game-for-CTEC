@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -33,14 +32,14 @@ public class Controller
         this.rooms = new HashMap<>();
 
         this.words = readFromFile("thingstodraw.txt").split("\n");
+    }
 
-        // Handle closing
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Type anything to close");
-        scanner.nextLine();
-        server.stop();
-        System.out.println("Server Closed.");
-        scanner.close();
+    /**
+     * Closes the server
+     */
+    public void stopServer() 
+    {
+        this.server.stop();
     }
 
     /**
