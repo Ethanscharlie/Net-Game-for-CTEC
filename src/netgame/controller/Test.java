@@ -45,6 +45,7 @@ public class Test {
         mockAssert(playerList.equals(String.format("%s,%s,", testName, testName)), "Player list not working");
 
         controller.removePlayer(testRoom, testIP);
+        controller.removePlayer(testRoom, testIP2);
         final int playerIDRemoved = controller.getPlayerID(testRoom, testIP);
         mockAssert(playerIDRemoved == -1, "Player was not properly removed from room"); 
     }
