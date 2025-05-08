@@ -104,6 +104,8 @@
 					<br>
 					<br>
 
+					<div id="penColorDisplay"></div>
+
 					<div class="slidecontainer">
 						<input type="range" min="1" max="100" value="1" class="slider" id="strokeWidthRange">
 					</div>
@@ -157,13 +159,16 @@
 			let nameInputElement = document.getElementById("nameInput");
 			let isDrawingDiv = document.getElementById("isDrawingDiv");
 			let playersDiv = document.getElementById("playersDiv");
+			let penColorDisplay = document.getElementById("penColorDisplay");
 
 			let drawing = false;
 
 			clearCanvas();
+			setPenColor("black");
 
 			strokeWidthRange.oninput = function() {
 				ctx.lineWidth = this.value;
+				updatePenDisplay();
 			};
 
 			document.getElementById("guessForm").addEventListener("submit", (e) => {
@@ -229,6 +234,23 @@
 
 			function setPenColor(colorName){
 				ctx.strokeStyle = colorName;
+				updatePenDisplay();
+			}
+
+			function updatePenDisplay() {
+				let penSize = strokeWidthRange.value / 3 + 20;
+				penColorDisplay.innerHTML = `
+				<div style="height: ${100 / 3 + 20 + 10}px;">
+					<div style="
+						position: absolute; 
+						background-color: ${ctx.strokeStyle}; 
+						margin: 10px; 
+						border-radius: 50%;
+						width: ${penSize}px; 
+						height: ${penSize}px;
+					"></div>
+				</div>
+				`
 			}
 
 			function clearCanvas()
