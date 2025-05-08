@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.1">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1440</x>
+      <y>130</y>
+      <w>390</w>
+      <h>460</h>
+    </coordinates>
+    <panel_attributes>netgame.controller::Controller
+--
+-rooms: HashMap&lt;String, Game&gt;
+-server: WebServer
+-words: String[]
+--
++Controller(): ctor
++stopServer(): void
++registerPlayer(String room, String ip): int
++removePlayer(String room, String ip): void
++getPlayerID(String room, String ip): int
++setPlayerName(String room, int id, String name): void
++getPlayerName(String room, int id): String
++getPlayerList(String room): String
++getCanvasData(String room): String
++setCanvasData(String room, String canvasData): void
++getDrawingPlayerID(String room): int
++newWord(String room): String
++getWord(String room): String
++changePlayers(String room): void
++resetGuesses(String room): void
++addGuess(String room, String guess, int userID): void
++getGuesses(String room): String
++removeEmptyRooms(): void
++getRoomsString(): String
++addRoom(): String
++readFromFile(String path): String
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>420</x>
+      <y>480</y>
+      <w>280</w>
+      <h>230</h>
+    </coordinates>
+    <panel_attributes>netgame.view::WebServer
+--
++port = 3000: int
+-controller: Controller
+-server: HttpServer
+-gameHTML: String
+-roomsHTML: String
+--
++WebServer(Controller controller): ctor
+-openWebserver(): void
++getController(): Controller
++getGameHTML(): String
++getRoomsHTML(): String
++stop(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1590</x>
+      <y>810</y>
+      <w>210</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>netgame.model::Game
+--
++players: ArrayList&lt;Player&gt;
++drawingPlayerID = 0: int
++canvasData: String
++words: String[]
++word: String
++guesses: String
+--
++Game(String[] words): ctor
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1030</x>
+      <y>130</y>
+      <w>390</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>netgame.controller::Test
+--
+-testsPassed: int
+--
++run(Controller controller): void
+-testPlayerMethods(Controller controller): void
+-mockAssert(boolean expression, String ifWrong): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>730</x>
+      <y>490</y>
+      <w>310</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>netgame.view::LeaveHandler
+--
+-webServer: WebServer
+-controller: Controller
+--
++LeaveHandler(WebServer webServer): ctor
++handle(HttpExchange exchange): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>250</x>
+      <y>780</y>
+      <w>300</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>netgame.view::MainHandler
+--
+-webServer: WebServer
+-controller: Controller
+--
++MainHandler(WebServer webServer): ctor
++handle(HttpExchange exchange): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>30</x>
+      <y>490</y>
+      <w>360</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>netgame.view::GameDataGetHandler
+--
+-webServer: WebServer
+-controller: Controller
+--
++GameDataGetHandler(WebServer webServer): ctor
++handle(HttpExchange exchange): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>50</x>
+      <y>630</y>
+      <w>340</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>netgame.view::GetRoomsHandler
+--
+-webServer: WebServer
+-controller: Controller
+--
++GetRoomsHandler(WebServer webServer): ctor
++handle(HttpExchange exchange): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>560</x>
+      <y>780</y>
+      <w>310</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>netgame.view::GuessHandler
+--
+-webServer: WebServer
+-controller: Controller
+--
++GuessHandler(WebServer webServer): ctor
++handle(HttpExchange exchange): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1320</x>
+      <y>810</y>
+      <w>260</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>netgame.model::Player
+--
++ip = "": String
++name = "": String
+--
++Player(String ip, String name): ctor
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1190</x>
+      <y>300</y>
+      <w>200</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>netgame.controller::Runner
+--
+--
++main(String[] args): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1280</x>
+      <y>240</y>
+      <w>30</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1380</x>
+      <y>320</y>
+      <w>80</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>60.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1440</x>
+      <y>580</y>
+      <w>30</w>
+      <h>250</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>10.0;10.0;10.0;230.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1680</x>
+      <y>580</y>
+      <w>30</w>
+      <h>250</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>10.0;10.0;10.0;230.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>540</x>
+      <y>440</y>
+      <w>920</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>900.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>540</x>
+      <y>450</y>
+      <w>30</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>10.0;10.0;10.0;30.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>380</x>
+      <y>530</y>
+      <w>60</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>40.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>690</x>
+      <y>530</y>
+      <w>60</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>40.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>730</x>
+      <y>630</y>
+      <w>340</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>netgame.view::AddRoomHandler
+--
+-webServer: WebServer
+-controller: Controller
+--
++AddRoomHandler(WebServer webServer): ctor
++handle(HttpExchange exchange): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>690</x>
+      <y>650</y>
+      <w>60</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>40.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>380</x>
+      <y>650</y>
+      <w>60</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>40.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>440</x>
+      <y>700</y>
+      <w>30</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>650</x>
+      <y>700</y>
+      <w>30</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
+  </element>
+</diagram>
