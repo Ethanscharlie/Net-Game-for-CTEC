@@ -193,9 +193,8 @@
 						let newCanvasData = data.canvas;
 						let word = data.word;
 						let guesses = data.guesses.replace("null", "");
-						let players = data.players;
 
-						isDrawingDiv.innerText = `${players[drawingPlayerID]} is drawing (ID: ${drawingPlayerID})`;
+						isDrawingDiv.innerText = `${data.players[drawingPlayerID].name} is drawing`;
 
 						if (newCanvasData == "clear") {
 							clearCanvas();
@@ -226,8 +225,8 @@
 						guessesContainerElement.scrollTop = guessesContainerElement.scrollHeight;
 
 						let playersNewHTML = "";
-						players.forEach(player => {
-							playersNewHTML += `<li>${player}</li>`;
+						data.players.forEach(player => {
+							playersNewHTML += `<li>${player.name}: ${player.score} points</li>`;
 						});
 						playersDiv.innerHTML = playersNewHTML;
                     })

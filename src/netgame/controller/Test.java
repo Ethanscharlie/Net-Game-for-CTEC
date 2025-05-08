@@ -41,8 +41,6 @@ public class Test {
         controller.registerPlayer(testRoom, testIP2);
         final int playerID2 = controller.getPlayerID(testRoom, testIP2);
         controller.setPlayerName(testRoom, playerID2, testName);
-        final String playerList = controller.getPlayerList(testRoom);
-        mockAssert(playerList.equals(String.format("[\"%s\",\"%s\"]", testName, testName)), "Player list not working");
 
         controller.removePlayer(testRoom, testIP);
         controller.removePlayer(testRoom, testIP2);

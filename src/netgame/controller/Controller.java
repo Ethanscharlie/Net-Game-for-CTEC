@@ -134,9 +134,15 @@ public class Controller
     {
         String playerList = "[";
 
-        for (Player player : rooms.get(room).players)
+        for (int index = 0; index < rooms.get(room).players.size(); index ++)
         {
-            playerList += "\"" + player.name + "\",";
+            Player player = rooms.get(room).players.get(index);
+
+            playerList += "{";
+            playerList += generateJSONRow("name", player.name);
+            playerList += generateJSONRow("score", player.score);
+            playerList += generateJSONRowFinal("id", index);
+            playerList += "},";
         }
 
         playerList = playerList.substring(0, playerList.length() - 1); // Remove trailing comma
