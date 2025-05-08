@@ -108,17 +108,20 @@
 						<button onclick="setPenColor(`blue`)">Space Blue</button>
 						<button onclick="setPenColor(`green`)">Space Green</button>
 						<button onclick="setPenColor(`red`)">Space Red</button>
-						<button onclick="setPenColor(`yellow`)">Space Yellow</button>
+						<button onclick="setPenColor(`#f7cf02`)">Space Yellow</button>
 						<br>
-						<button onclick="setPenColor(`orange`)">Space Orange</button>
-						<button onclick="setPenColor(`brown`)">Space Brown</button>
+						<button onclick="setPenColor(`#f0520a`)">Space Orange</button>
+						<button onclick="setPenColor(`#472110`)">Space Brown</button>
 						<button onclick="setPenColor(`white`)">Space White</button>
 						<button onclick="setPenColor(`black`)">Space Black</button>
 					</div>
 
 					<br>
 
-					<button onclick="clearCanvas()">Clear Canvas</button><br>
+					<div>
+						<button onclick="clearCanvas()">Clear Canvas</button><br>
+						<button onclick="fillBackground()">Fill Background</button><br>
+					</div>
 
 				<div id="guessPanel">
 					<div id="guesses">
@@ -227,6 +230,12 @@
 			function clearCanvas()
 			{
 				ctx.clearRect(0, 0, canvas.width, canvas.height);
+			}
+
+			function fillBackground()
+			{
+				ctx.fillStyle = ctx.strokeStyle;
+				ctx.fillRect(0, 0, canvas.width, canvas.height);
 			}
 
 			function getMousePos(evt) {
