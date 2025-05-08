@@ -126,8 +126,11 @@
 					<br>
 
 					<div>
-						<button onclick="clearCanvas()">Clear Canvas</button><br>
-						<button onclick="fillBackground()">Fill Background</button><br>
+						<button onclick="clearCanvas()">Clear Canvas</button>
+						<button onclick="fillBackground()">Fill Background</button>
+						<br>
+						<button onclick="drawtype='line'">Line Mode</button>
+						<button onclick="drawtype='rect'">Rect Mode</button>
 					</div>
 
 				<div id="guessPanel">
@@ -163,6 +166,8 @@
 			let penColorDisplay = document.getElementById("penColorDisplay");
 
 			let drawing = false;
+			let drawtype = "line";
+			let boxStart = {"x": 0, "y": 0};
 
 			clearCanvas();
 			setPenColor("black");
@@ -235,6 +240,7 @@
 
 			function setPenColor(colorName){
 				ctx.strokeStyle = colorName;
+				ctx.fillStyle = ctx.strokeStyle;
 				updatePenDisplay();
 			}
 
@@ -273,31 +279,71 @@
 			    };
 			}
 
+			function drawRectWithCorners(x1, y1, x2, y2) {
+				let x, y, width, height;
+
+				if (x1 < x2) {
+				  x = x1;
+				  width = x2 - x1;
+				} else {
+				  x = x2;
+				  width = x1 - x2;
+				}
+
+				if (y1 < y2) {
+				  y = y1;
+				  height = y2 - y1;
+				} else {
+				  y = y2;
+				  height = y1 - y2;
+				}
+
+				ctx.fillRect(x, y, width, height);
+			}
+
 			canvas.addEventListener('mousedown', (e) => {
 				var mousePos = getMousePos(e);
 
-			  drawing = true;
-			  ctx.beginPath();
-			  ctx.moveTo(mousePos.x, mousePos.y);
+				drawing = true;
+				if (drawtype == "line") {
+					ctx.beginPath();
+					ctx.moveTo(mousePos.x, mousePos.y);
+				}
+				else if (drawtype == "rect") {
+					boxStart = mousePos;
+				}
 			});
 		 
 			canvas.addEventListener('mousemove', (e) => {
+				if (drawing) {
+					var mousePos = getMousePos(e);
+
+					if (drawtype == "line") {
+						ctx.lineTo(mousePos.x, mousePos.y);
+						ctx.stroke();
+					}
+				}
+			});
+		 
+			canvas.addEventListener('mouseup', (e) => {
+				drawing = false;
 				var mousePos = getMousePos(e);
 
-			  if (drawing) {
-			    ctx.lineTo(mousePos.x, mousePos.y);
-			    ctx.stroke();
-			  }
+				if (drawtype == "line") {
+					ctx.closePath();
+				}
+				else if (drawtype == "rect") {
+					drawRectWithCorners(boxStart.x, boxStart.y, mousePos.x, mousePos.y);
+				}
 			});
 		 
-			canvas.addEventListener('mouseup', () => {
-			  drawing = false;
-			  ctx.closePath();
-			});
-		 
-			canvas.addEventListener('mouseleave', () => {
-			  drawing = false;
-			  ctx.closePath();
+			canvas.addEventListener('mouseleave', (e) => {
+				drawing = false;
+				var mousePos = getMousePos(e);
+
+				if (drawtype == "line") {
+					ctx.closePath();
+				}
 			});
 
 			window.setInterval(function(){
