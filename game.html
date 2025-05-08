@@ -188,33 +188,28 @@
                     .then(data => {
 						userID = data.yourID;
 						document.getElementById("MyID").innerText = `My ID: ${userID}`;
-
-						let drawingPlayerID = data.drawingPlayerID;
-						let newCanvasData = data.canvas;
-						let word = data.word;
 						let guesses = data.guesses.replace("null", "");
 
-						isDrawingDiv.innerText = `${data.players[drawingPlayerID].name} is drawing`;
+						isDrawingDiv.innerText = `${data.players[data.drawingPlayerID].name} is drawing`;
 
-						if (newCanvasData == "clear") {
+						if (data.canvas == "clear") {
 							clearCanvas();
 						}
 
 						document.getElementById('responseDiv').innerText = "";
-						if (drawingPlayerID == userID) {
-							document.getElementById('responseDiv').innerText = "YOU are drawing";
-							document.getElementById('responseDiv').innerText += `     ${word}`;
+						if (data.drawingPlayerID == userID) {
+							document.getElementById('responseDiv').innerText = `You are drawing ${data.word}`;
 						} else {
-							document.getElementById('responseDiv').innerText = "YOU are guessing";
+							document.getElementById('responseDiv').innerText = "You are guessing";
 						}
 
-						if (userID != drawingPlayerID) {
+						if (userID != data.drawingPlayerID) {
 							let image = new Image();
 							image.onload = function() {
 								ctx.clearRect(0, 0, canvas.width, canvas.height);
 								ctx.drawImage(image, 0, 0);
 							};
-							image.src = newCanvasData;
+							image.src = data.canvas;
 						}
 
 						let guessesNewHTML = "";
