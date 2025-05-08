@@ -349,4 +349,75 @@ public class Controller
 
         return data;
     }
+
+	/**
+	 * Generates JSON based on key and item so I don't have to type it out each time
+	 * @param key The key
+	 * @param item The value
+	 * @return The JSON row as a string
+	 */
+	public static String generateJSONRow(String key, String item) 
+	{
+		return String.format("\"%s\":\"%s\",\n", key, item);
+	}
+
+	/**
+	 * Generates JSON based on key and item so I don't have to type it out each time
+	 * Doesn't add quotes to the value
+	 * @param key The key
+	 * @param item The value
+	 * @return The JSON row as a string
+	 */
+	public static String generateJSONRowRaw(String key, String item) 
+	{
+		return String.format("\"%s\":%s,\n", key, item);
+	}
+
+	/**
+	 * Generates JSON based on key and item so I don't have to type it out each time
+	 * Doesn't add quotes to the value
+	 * Doesn't add a comma to the end
+	 * @param key The key
+	 * @param item The value
+	 * @return The JSON row as a string
+	 */
+	public static String generateJSONRowRawFinal(String key, String item) 
+	{
+		return String.format("\"%s\":%s\n", key, item);
+	}
+
+	/**
+	 * Generates JSON based on key and item so I don't have to type it out each time
+	 * @param key The key
+	 * @param item The value as an int
+	 * @return The JSON row as a string
+	 */
+	public static String generateJSONRow(String key, int item) 
+	{
+		return generateJSONRow(key, ((Integer) item).toString());
+	}
+
+	/**
+	 * Generates JSON based on key and item so I don't have to type it out each time
+	 * With no comma at the end
+	 * @param key The key
+	 * @param item The value
+	 * @return The JSON row as a string
+	 */
+	public static String generateJSONRowFinal(String key, String item) 
+	{
+		return String.format("\"%s\":\"%s\"\n", key, item);
+	}
+
+	/**
+	 * Generates JSON based on key and item so I don't have to type it out each time
+	 * With no comma at the end
+	 * @param key The key
+	 * @param item The value as an int
+	 * @return The JSON row as a string
+	 */
+	public static String generateJSONRowFinal(String key, int item) 
+	{
+		return generateJSONRowFinal(key, ((Integer) item).toString());
+	}
 }
