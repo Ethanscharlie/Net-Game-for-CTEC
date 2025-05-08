@@ -42,12 +42,14 @@ class GameDataGetHandler implements HttpHandler {
 
         // Response
         String response = "";
-        response += String.format("yourID=%d\n", this.controller.getPlayerID(room, clientIp));
-        response += String.format("drawingPlayerID=%s\n", drawingPlayerID);
-        response += String.format("canvas=%s\n", this.controller.getCanvasData(room));
-        response += String.format("word=%s\n", word);
-        response += String.format("guesses=%s\n", this.controller.getGuesses(room));
-        response += String.format("players=%s\n", this.controller.getPlayerList(room));
+        response += "{";
+        response += WebServer.generateJSONRow("yourID", this.controller.getPlayerID(room, clientIp));
+        response += WebServer.generateJSONRow("drawingPlayerID", drawingPlayerID);
+        response += WebServer.generateJSONRow("canvas", this.controller.getCanvasData(room));
+        response += WebServer.generateJSONRow("word", word);
+        response += WebServer.generateJSONRow("guesses", this.controller.getGuesses(room));
+        response += WebServer.generateJSONRowRawFinal("players", this.controller.getPlayerList(room));
+        response += "}";
 
         exchange.sendResponseHeaders(200, response.getBytes().length);  
         OutputStream os = exchange.getResponseBody();

@@ -184,18 +184,16 @@
 
             function sendGetRequest() {
                 fetch(`/getgamedata?room=${roomID}&name=${nameInputElement.value}&spec=${false}&canvas=${canvas.toDataURL()}`)
-                    .then(response => response.text())
+                    .then(response => response.json())
                     .then(data => {
-						let splitData = data.split("\n");
-
-						userID = splitData[0].replace("yourID=", "");
+						userID = data.yourID;
 						document.getElementById("MyID").innerText = `My ID: ${userID}`;
 
-						let drawingPlayerID = splitData[1].replace("drawingPlayerID=", "");
-						let newCanvasData = splitData[2].replace("canvas=", "");
-						let word = splitData[3].replace("word=", "");
-						let guesses = splitData[4].replace("guesses=", "").replace("null", "");
-						let players = splitData[5].slice(0, -1).replace("players=", "").split(",");
+						let drawingPlayerID = data.drawingPlayerID;
+						let newCanvasData = data.canvas;
+						let word = data.word;
+						let guesses = data.guesses.replace("null", "");
+						let players = data.players;
 
 						isDrawingDiv.innerText = `${players[drawingPlayerID]} is drawing (ID: ${drawingPlayerID})`;
 

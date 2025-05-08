@@ -132,13 +132,15 @@ public class Controller
      */
     public String getPlayerList(String room)
     {
-        String playerList = "";
+        String playerList = "[";
 
         for (Player player : rooms.get(room).players)
         {
-            playerList += player.name + ",";
+            playerList += "\"" + player.name + "\",";
         }
 
+        playerList = playerList.substring(0, playerList.length() - 1); // Remove trailing comma
+        playerList += "]";
         return playerList;
     }
 
