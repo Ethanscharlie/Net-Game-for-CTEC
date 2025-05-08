@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="15.1">
-  <zoom_level>10</zoom_level>
+  <zoom_level>8</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1440</x>
-      <y>130</y>
-      <w>390</w>
-      <h>460</h>
+      <x>1168</x>
+      <y>0</y>
+      <w>312</w>
+      <h>368</h>
     </coordinates>
     <panel_attributes>netgame.controller::Controller
 --
@@ -43,10 +43,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>420</x>
-      <y>480</y>
-      <w>280</w>
-      <h>230</h>
+      <x>600</x>
+      <y>280</y>
+      <w>224</w>
+      <h>184</h>
     </coordinates>
     <panel_attributes>netgame.view::WebServer
 --
@@ -69,10 +69,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1590</x>
-      <y>810</y>
-      <w>210</w>
-      <h>180</h>
+      <x>1168</x>
+      <y>400</y>
+      <w>168</w>
+      <h>144</h>
     </coordinates>
     <panel_attributes>netgame.model::Game
 --
@@ -91,10 +91,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1030</x>
-      <y>130</y>
-      <w>390</w>
-      <h>120</h>
+      <x>840</x>
+      <y>0</y>
+      <w>312</w>
+      <h>96</h>
     </coordinates>
     <panel_attributes>netgame.controller::Test
 --
@@ -110,10 +110,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>730</x>
-      <y>490</y>
-      <w>310</w>
-      <h>120</h>
+      <x>848</x>
+      <y>288</y>
+      <w>248</w>
+      <h>96</h>
     </coordinates>
     <panel_attributes>netgame.view::LeaveHandler
 --
@@ -129,10 +129,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>250</x>
-      <y>780</y>
-      <w>300</w>
-      <h>120</h>
+      <x>464</x>
+      <y>520</y>
+      <w>240</w>
+      <h>96</h>
     </coordinates>
     <panel_attributes>netgame.view::MainHandler
 --
@@ -148,10 +148,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>30</x>
-      <y>490</y>
-      <w>360</w>
-      <h>120</h>
+      <x>288</x>
+      <y>288</y>
+      <w>288</w>
+      <h>96</h>
     </coordinates>
     <panel_attributes>netgame.view::GameDataGetHandler
 --
@@ -167,10 +167,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>50</x>
-      <y>630</y>
-      <w>340</w>
-      <h>120</h>
+      <x>304</x>
+      <y>400</y>
+      <w>272</w>
+      <h>96</h>
     </coordinates>
     <panel_attributes>netgame.view::GetRoomsHandler
 --
@@ -186,10 +186,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>560</x>
-      <y>780</y>
-      <w>310</w>
-      <h>120</h>
+      <x>712</x>
+      <y>520</y>
+      <w>248</w>
+      <h>96</h>
     </coordinates>
     <panel_attributes>netgame.view::GuessHandler
 --
@@ -205,10 +205,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1320</x>
-      <y>810</y>
-      <w>260</w>
-      <h>110</h>
+      <x>1344</x>
+      <y>400</y>
+      <w>208</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes>netgame.model::Player
 --
@@ -223,10 +223,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1190</x>
-      <y>300</y>
-      <w>200</w>
-      <h>70</h>
+      <x>968</x>
+      <y>136</y>
+      <w>160</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes>netgame.controller::Runner
 --
@@ -239,10 +239,10 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1280</x>
-      <y>240</y>
-      <w>30</w>
-      <h>80</h>
+      <x>1040</x>
+      <y>88</y>
+      <w>24</w>
+      <h>64</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
@@ -250,10 +250,10 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1380</x>
-      <y>320</y>
-      <w>80</w>
-      <h>40</h>
+      <x>1120</x>
+      <y>152</y>
+      <w>64</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes>60.0;20.0;10.0;20.0</additional_attributes>
@@ -262,42 +262,42 @@
     <id>Relation</id>
     <coordinates>
       <x>1440</x>
-      <y>580</y>
-      <w>30</w>
-      <h>250</h>
+      <y>360</y>
+      <w>24</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes/>
-    <additional_attributes>10.0;10.0;10.0;230.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1680</x>
-      <y>580</y>
-      <w>30</w>
-      <h>250</h>
+      <x>1240</x>
+      <y>360</y>
+      <w>24</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes/>
-    <additional_attributes>10.0;10.0;10.0;230.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>540</x>
-      <y>440</y>
-      <w>920</w>
+      <x>696</x>
+      <y>248</y>
+      <w>488</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>590.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>696</x>
+      <y>256</y>
+      <w>24</w>
       <h>40</h>
-    </coordinates>
-    <panel_attributes/>
-    <additional_attributes>900.0;20.0;10.0;20.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>540</x>
-      <y>450</y>
-      <w>30</w>
-      <h>50</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes>10.0;10.0;10.0;30.0</additional_attributes>
@@ -305,10 +305,10 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>380</x>
-      <y>530</y>
-      <w>60</w>
-      <h>40</h>
+      <x>568</x>
+      <y>320</y>
+      <w>48</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes>40.0;20.0;10.0;20.0</additional_attributes>
@@ -316,10 +316,10 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>690</x>
-      <y>530</y>
-      <w>60</w>
-      <h>40</h>
+      <x>816</x>
+      <y>320</y>
+      <w>48</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes>40.0;20.0;10.0;20.0</additional_attributes>
@@ -327,10 +327,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>730</x>
-      <y>630</y>
-      <w>340</w>
-      <h>120</h>
+      <x>848</x>
+      <y>400</y>
+      <w>272</w>
+      <h>96</h>
     </coordinates>
     <panel_attributes>netgame.view::AddRoomHandler
 --
@@ -346,10 +346,10 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>690</x>
-      <y>650</y>
-      <w>60</w>
-      <h>40</h>
+      <x>816</x>
+      <y>416</y>
+      <w>48</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes>40.0;20.0;10.0;20.0</additional_attributes>
@@ -357,10 +357,10 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>380</x>
-      <y>650</y>
-      <w>60</w>
-      <h>40</h>
+      <x>568</x>
+      <y>416</y>
+      <w>48</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes>40.0;20.0;10.0;20.0</additional_attributes>
@@ -368,10 +368,10 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>440</x>
-      <y>700</y>
-      <w>30</w>
-      <h>100</h>
+      <x>616</x>
+      <y>456</y>
+      <w>24</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
@@ -379,10 +379,10 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>650</x>
-      <y>700</y>
-      <w>30</w>
-      <h>100</h>
+      <x>784</x>
+      <y>456</y>
+      <w>24</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
