@@ -40,6 +40,7 @@ public class GuessHandler implements HttpHandler
             if (guess.equalsIgnoreCase(correctGuess)) 
             {
                 System.out.println("User got it correct!");
+                this.controller.increasePlayerScore(room, this.controller.getPlayerID(room, clientIp));
                 this.controller.changePlayers(room);
                 this.controller.newWord(room);
                 this.controller.setCanvasData(room, "clear");
