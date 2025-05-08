@@ -24,10 +24,14 @@ class MainHandler implements HttpHandler {
 		if (exchange.getRequestURI().getRawQuery() != null) {
   		    final String query = exchange.getRequestURI().getQuery();
 			room = query.replace("room=", "");
-        	response = this.webServer.getGameHTML().replace("`#INSERTROOMIDHERE`", room);
 
-	 		final String clientIp = exchange.getRemoteAddress().getAddress().getHostAddress();
-			this.controller.registerPlayer(room, clientIp);
+			if (controller.roomExists(room))
+			{
+   	     		response = this.webServer.getGameHTML().replace("`#INSERTROOMIDHERE`", room);
+
+	 			final String clientIp = exchange.getRemoteAddress().getAddress().getHostAddress();
+				this.controller.registerPlayer(room, clientIp);
+			}
 		}
 
         exchange.sendResponseHeaders(200, response.getBytes().length);  

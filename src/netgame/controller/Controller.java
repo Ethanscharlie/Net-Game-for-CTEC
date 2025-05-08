@@ -43,6 +43,16 @@ public class Controller
     }
 
     /**
+     * Checks if a room exists
+     * @param room the room id
+     * @return A bool
+     */
+    public boolean roomExists(String room)
+    {
+        return this.rooms.containsKey(room);
+    }
+
+    /**
      * Adds a client to the players list
      *
      * @param room the room name

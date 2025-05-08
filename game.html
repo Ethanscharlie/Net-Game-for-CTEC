@@ -88,13 +88,6 @@
 						<input type="text" id="nameInput" value="Unnamed">
 					</div>
 
-  			      	<div id="MyID"></div>
-
-					<!-- <div id="spectatorDiv" class="oneLineDiv">
-						<label>Spectator</label>
-						<input type="checkbox" id="SpectatorCheckbox" name="Spectator" value="false">
-					</div> -->
-
   			      	<div id="responseDiv"></div>
   			      	<div id="isDrawingDiv"></div>
 
@@ -187,7 +180,6 @@
                     .then(response => response.json())
                     .then(data => {
 						userID = data.yourID;
-						document.getElementById("MyID").innerText = `My ID: ${userID}`;
 						let guesses = data.guesses.replace("null", "");
 
 						isDrawingDiv.innerText = `${data.players[data.drawingPlayerID].name} is drawing`;
