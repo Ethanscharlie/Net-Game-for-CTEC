@@ -6,6 +6,7 @@ package netgame.model;
 public class Player {
     public String ip = "";
     public String name = "";
+    public int score = 0;
 
     public Player(String ip, String name) 
     {

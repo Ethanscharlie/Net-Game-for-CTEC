@@ -205,6 +205,16 @@ public class Controller
     }
 
     /**
+     * Adds 1 to the players score
+     * @param room The room name
+     * @param userID The index of the player in the players list
+     */
+    public void increasePlayerScore(String room, int userID) 
+    {
+        rooms.get(room).players.get(userID).score ++;
+    }
+
+    /**
      * Resets the history of guesses in the guesses panel
      * And writes the guesses to a log
      * @param room the room name
