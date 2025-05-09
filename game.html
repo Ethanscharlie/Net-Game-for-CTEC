@@ -108,7 +108,7 @@
 					<div id="penColorDisplay"></div>
 
 					<div class="slidecontainer">
-						<input type="range" min="1" max="100" value="1" class="slider" id="strokeWidthRange">
+						<input type="range" min="1" max="100" value="5" class="slider" id="strokeWidthRange">
 					</div>
 
 					<div id="colorButtons">
@@ -178,6 +178,7 @@
 			clearCanvas();
 			setPenColor("black");
 
+			ctx.lineWidth = strokeWidthRange.value;
 			strokeWidthRange.oninput = function() {
 				ctx.lineWidth = this.value;
 				updatePenDisplay();
