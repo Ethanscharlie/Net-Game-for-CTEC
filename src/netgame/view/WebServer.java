@@ -10,7 +10,7 @@ import netgame.controller.Controller;
  */
 public class WebServer
 {
-	public final int port = 3000;
+	public final int port = 80;
 
 	private Controller controller;
 
