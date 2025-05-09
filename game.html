@@ -248,6 +248,7 @@
 			function setPenColor(colorName){
 				ctx.strokeStyle = colorName;
 				ctx.fillStyle = ctx.strokeStyle;
+				ctx.lineCap = 'round';
 				updatePenDisplay();
 			}
 
